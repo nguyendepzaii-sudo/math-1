@@ -1,0 +1,4728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>数学乐园 — 一年级30天数学大冒险</title>
+  <style>
+    /* ==========================================================================
+       1. KAWAII PASTEL THEME VARIABLES & WORLD THEMES
+       ========================================================================== */
+    :root {
+      --sky-blue: #6EC6FF;
+      --sky-light: #E6F6FF;
+      --pastel-pink: #FF94B8;
+      --pink-light: #FFF0F6;
+      --creamy-yellow: #FFE680;
+      --yellow-light: #FFFDF0;
+      --light-purple: #C5A3FF;
+      --purple-light: #F5EEFF;
+      --mint-green: #7CE0B8;
+      --mint-light: #EBFFF6;
+      --coral-orange: #FFAB76;
+      --card-white: rgba(255, 255, 255, 0.95);
+      --text-main: #3A3252;
+      --text-soft: #6E6488;
+      --shadow-soft: 0 10px 28px rgba(96, 80, 145, 0.14);
+      --shadow-btn: 0 6px 0 rgba(0, 0, 0, 0.12);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --bg-gradient: linear-gradient(180deg, #BCE6FF 0%, #E8F7FF 48%, #FFF5FA 82%, #E8FBE8 100%);
+    }
+
+    /* Unlockable & World-Specific Background Themes */
+    body.theme-starry, body.world-theme-space {
+      --bg-gradient: linear-gradient(180deg, #2D2654 0%, #4E3B84 50%, #7C5AA6 85%, #F3D1F4 100%);
+      --sky-light: #F2ECFF;
+    }
+
+    body.theme-sakura, body.world-theme-candy {
+      --bg-gradient: linear-gradient(180deg, #FFD6E8 0%, #FFF0F6 52%, #FFFBE6 84%, #E3F9E5 100%);
+      --sky-light: #FFF2F7;
+    }
+
+    body.world-theme-jungle {
+      --bg-gradient: linear-gradient(180deg, #C7F9CC 0%, #EBFBEE 50%, #FFF9DB 85%, #D8F5A2 100%);
+    }
+
+    body.world-theme-ocean {
+      --bg-gradient: linear-gradient(180deg, #74C0FC 0%, #D0EBFF 52%, #E7F5FF 85%, #FFF9DB 100%);
+    }
+
+    body.world-theme-dino {
+      --bg-gradient: linear-gradient(180deg, #FFD8A8 0%, #FFF4E6 52%, #FFF9DB 85%, #D8F5A2 100%);
+    }
+
+    body.world-theme-castle {
+      --bg-gradient: linear-gradient(180deg, #E5DBFF 0%, #FFF0F6 48%, #FFF9DB 84%, #D0EBFF 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "WenQuanYi Micro Hei", system-ui, -apple-system, sans-serif;
+      color: var(--text-main);
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      overflow-x: hidden;
+    }
+
+    /* Animated Kawaii World Background */
+    .world-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .bg-rainbow {
+      position: absolute;
+      top: -40px;
+      right: -60px;
+      width: 360px;
+      height: 220px;
+      opacity: 0.55;
+      animation: floatGentle 8s ease-in-out infinite;
+    }
+
+    .bg-planet {
+      position: absolute;
+      top: 12%;
+      left: 5%;
+      width: 82px;
+      height: 82px;
+      opacity: 0.78;
+      animation: floatPlanet 10s ease-in-out infinite;
+    }
+
+    .bg-cloud {
+      position: absolute;
+      opacity: 0.85;
+      filter: drop-shadow(0 6px 12px rgba(110, 198, 255, 0.2));
+    }
+
+    .cloud-1 { top: 7%; left: 16%; width: 130px; animation: driftCloud 26s linear infinite; }
+    .cloud-2 { top: 22%; right: 12%; width: 105px; animation: driftCloud 32s linear infinite reverse; }
+    .cloud-3 { bottom: 18%; left: 6%; width: 115px; animation: floatGentle 7s ease-in-out infinite; }
+
+    .bg-star {
+      position: absolute;
+      animation: twinkleStar 3.2s ease-in-out infinite;
+    }
+
+    .star-1 { top: 15%; left: 42%; animation-delay: 0.3s; }
+    .star-2 { top: 28%; left: 8%; animation-delay: 1.1s; }
+    .star-3 { top: 10%; right: 28%; animation-delay: 1.8s; }
+    .star-4 { bottom: 26%; right: 7%; animation-delay: 0.7s; }
+
+    .bg-hills {
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 120px;
+      z-index: 0;
+    }
+
+    .bg-flower {
+      position: absolute;
+      bottom: 18px;
+      font-size: 24px;
+      animation: swayFlower 4s ease-in-out infinite;
+    }
+
+    .flower-1 { left: 8%; animation-delay: 0.2s; }
+    .flower-2 { left: 24%; animation-delay: 1.2s; }
+    .flower-3 { right: 22%; animation-delay: 0.6s; }
+    .flower-4 { right: 7%; animation-delay: 1.7s; }
+
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes floatPlanet {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(8px, -12px) rotate(6deg); }
+    }
+
+    @keyframes driftCloud {
+      0% { transform: translateX(-25px); }
+      50% { transform: translateX(25px); }
+      100% { transform: translateX(-25px); }
+    }
+
+    @keyframes twinkleStar {
+      0%, 100% { transform: scale(0.85) rotate(0deg); opacity: 0.6; }
+      50% { transform: scale(1.2) rotate(15deg); opacity: 1; }
+    }
+
+    @keyframes swayFlower {
+      0%, 100% { transform: rotate(-6deg); }
+      50% { transform: rotate(8deg); }
+    }
+
+    /* Confetti / Star Burst Overlay Canvas */
+    #fxCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 200;
+    }
+
+    /* App Container */
+    .app-shell {
+      position: relative;
+      z-index: 10;
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 12px 14px 28px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* Top Navigation & Status Bar */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      background: var(--card-white);
+      border: 3px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 8px 14px;
+      box-shadow: var(--shadow-soft);
+      flex-wrap: wrap;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .home-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, #FF94B8, #FF70A2);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #D95382;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .home-pill-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #D95382;
+    }
+
+    .reward-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .stat-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #FFF9DB;
+      border: 2px solid #FFE066;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #8A5A00;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .stat-pill:hover { transform: scale(1.05); }
+    .stat-pill.trophy-pill { background: #F3E8FF; border-color: #D0BFFF; color: #5F3DC4; }
+    .stat-pill.gift-pill { background: #FFE8F0; border-color: #FFADCA; color: #C2255C; }
+    .stat-pill.streak-pill { background: #FFF4E6; border-color: #FFC078; color: #D9480F; }
+    .stat-pill.gift-ready { animation: pulseGift 1.2s ease-in-out infinite; }
+
+    @keyframes pulseGift {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1) rotate(-3deg); }
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .icon-circle-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #E5DEFF;
+      background: #FFFFFF;
+      font-size: 1.15rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #D8D0F5;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .icon-circle-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #D8D0F5;
+    }
+
+    .icon-circle-btn.muted {
+      background: #F1F3F5;
+      opacity: 0.65;
+      position: relative;
+    }
+
+    .icon-circle-btn.muted::after {
+      content: "";
+      position: absolute;
+      width: 70%;
+      height: 3px;
+      background: #FF6B6B;
+      transform: rotate(-45deg);
+      border-radius: 2px;
+    }
+
+    .parent-top-btn {
+      background: #EDF2FF;
+      border: 2px solid #BAC8FF;
+      color: #364FC7;
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #91A7FF;
+    }
+
+    /* Screens */
+    .screen {
+      display: none;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+      animation: popInScreen 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .screen.active { display: flex; }
+
+    @keyframes popInScreen {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Hero Card */
+    .hero-card {
+      background: var(--card-white);
+      border: 4px solid #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 16px 20px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .mascot-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      min-width: 132px;
+      cursor: pointer;
+    }
+
+    .mascot-svg-wrap {
+      width: 124px;
+      height: 124px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.25s;
+    }
+
+    .mascot-stage:hover .mascot-svg-wrap { transform: scale(1.05); }
+    .mascot-anim-wave { animation: mascotBounce 2.6s ease-in-out infinite; }
+    .mascot-anim-happy { animation: mascotHappyJump 0.65s ease-in-out infinite; }
+    .mascot-anim-encourage { animation: mascotNod 1.4s ease-in-out infinite; }
+
+    @keyframes mascotBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    @keyframes mascotHappyJump {
+      0%, 100% { transform: translateY(0) scale(1); }
+      40% { transform: translateY(-16px) scale(1.06); }
+      70% { transform: translateY(-4px) scale(0.98); }
+    }
+
+    @keyframes mascotNod {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(-4deg); }
+      75% { transform: rotate(4deg); }
+    }
+
+    .mascot-name-tag {
+      background: linear-gradient(90deg, #FFE0EC, #E8DEFF);
+      color: #5A3E85;
+      font-size: 0.85rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 999px;
+      border: 2px solid #FFFFFF;
+    }
+
+    .hero-text-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .welcome-title {
+      font-size: clamp(1.45rem, 3.8vw, 2.05rem);
+      font-weight: 900;
+      color: #FF5C8D;
+      text-shadow: 2px 2px 0 #FFFFFF;
+      line-height: 1.25;
+    }
+
+    .welcome-subtitle {
+      font-size: clamp(1rem, 2.4vw, 1.22rem);
+      font-weight: 800;
+      color: #5B4B8A;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .speech-bubble {
+      background: #FFF9E6;
+      border: 2.5px solid #FFD966;
+      border-radius: 18px;
+      padding: 10px 14px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #6B4C00;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .speak-mini-btn {
+      background: #FFE066;
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 0 #E6B800;
+    }
+
+    /* Daily Adventure Banner on Home Screen */
+    .daily-quest-banner {
+      background: linear-gradient(135deg, #FFF9DB 0%, #FFE3EE 55%, #E7F5FF 100%);
+      border: 3px solid #FFFFFF;
+      border-radius: 24px;
+      padding: 14px 18px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .daily-quest-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .daily-quest-title {
+      font-size: 1.18rem;
+      font-weight: 900;
+      color: #D6336C;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .daily-quest-sub {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #5B4B8A;
+    }
+
+    .warmup-pill-btn {
+      background: linear-gradient(135deg, #FFA94D, #FD7E14);
+      color: #FFFFFF;
+      border: 2.5px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 0.92rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #D9480F;
+    }
+
+    /* Main 4 Home Action Buttons */
+    .home-main-cta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .big-cta-btn {
+      border: 3px solid #FFFFFF;
+      border-radius: 24px;
+      padding: 15px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      cursor: pointer;
+      text-align: left;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .big-cta-btn:active { transform: translateY(4px); }
+
+    .cta-start {
+      background: linear-gradient(135deg, #FF85B3 0%, #FF5E97 100%);
+      color: #FFFFFF;
+      box-shadow: 0 7px 0 #D63C74, 0 12px 20px rgba(255, 94, 151, 0.28);
+    }
+
+    .cta-challenge {
+      background: linear-gradient(135deg, #5BC0FF 0%, #339AF0 100%);
+      color: #FFFFFF;
+      box-shadow: 0 7px 0 #1C7ED6, 0 12px 20px rgba(51, 154, 240, 0.28);
+    }
+
+    .cta-rewards {
+      background: linear-gradient(135deg, #FFD43B 0%, #FAB005 100%);
+      color: #5C3C00;
+      box-shadow: 0 7px 0 #D98200, 0 12px 20px rgba(250, 176, 5, 0.26);
+    }
+
+    .cta-records {
+      background: linear-gradient(135deg, #B197FC 0%, #845EF7 100%);
+      color: #FFFFFF;
+      box-shadow: 0 7px 0 #5F3DC4, 0 12px 20px rgba(132, 94, 247, 0.26);
+    }
+
+    .cta-icon-bubble {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.28);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      flex-shrink: 0;
+    }
+
+    .cta-label-group { display: flex; flex-direction: column; gap: 2px; }
+    .cta-title { font-size: clamp(1.15rem, 2.6vw, 1.4rem); font-weight: 900; }
+    .cta-desc { font-size: 0.85rem; font-weight: 700; opacity: 0.92; }
+
+    /* Free Practice Mode Cards */
+    .section-heading {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #4A3B75;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-left: 6px;
+    }
+
+    .modes-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .mode-card {
+      background: var(--card-white);
+      border: 3px solid #FFFFFF;
+      border-radius: 22px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 6px 0 rgba(110, 95, 160, 0.14), var(--shadow-soft);
+      transition: transform 0.18s;
+    }
+
+    .mode-card:hover { transform: translateY(-3px); }
+    .mode-card.mode-add { border-bottom: 6px solid #FF85B3; }
+    .mode-card.mode-sub { border-bottom: 6px solid #5BC0FF; }
+    .mode-card.mode-pic { border-bottom: 6px solid #51CF66; }
+    .mode-card.mode-rnd { border-bottom: 6px solid #FCC419; }
+
+    .mode-badge-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.9rem;
+      font-weight: 900;
+    }
+
+    .mode-add .mode-badge-icon { background: #FFE3EE; color: #E64980; }
+    .mode-sub .mode-badge-icon { background: #E3F5FF; color: #1971C2; }
+    .mode-pic .mode-badge-icon { background: #EBFBEE; color: #2B8A3E; }
+    .mode-rnd .mode-badge-icon { background: #FFF9DB; color: #E67700; }
+
+    .mode-card-title { font-size: 1.1rem; font-weight: 900; color: var(--text-main); }
+    .mode-card-sub { font-size: 0.82rem; font-weight: 700; color: var(--text-soft); }
+
+    /* ==========================================================================
+       2. 30-MAP ADVENTURE MAP & WORLD TABS SCREEN
+       ========================================================================== */
+    .panel-card {
+      background: var(--card-white);
+      border: 4px solid #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 18px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title {
+      font-size: clamp(1.3rem, 3vw, 1.65rem);
+      font-weight: 900;
+      color: #4A3B75;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Daily Countdown & Calendar Strip */
+    .daily-status-card {
+      background: linear-gradient(90deg, #FFF9DB, #F3F0FF);
+      border: 2.5px solid #FFE066;
+      border-radius: 20px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .countdown-badge {
+      background: #FFFFFF;
+      border: 2px solid #FFD43B;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-weight: 900;
+      font-size: 0.92rem;
+      color: #D9480F;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .calendar-strip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .cal-day-dot {
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: #FFFFFF;
+      border: 2px solid #DEE2E6;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #6E6488;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cal-day-dot.done {
+      background: #D3F9D8;
+      border-color: #51CF66;
+      color: #2B8A3E;
+    }
+
+    /* 6 Worlds Selector Tabs */
+    .world-tabs-bar {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+    }
+
+    .world-tab-btn {
+      background: #F8F9FA;
+      border: 2.5px solid #E5DBFF;
+      border-radius: 16px;
+      padding: 8px 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 0.84rem;
+      color: #4A3B75;
+      transition: transform 0.15s;
+    }
+
+    .world-tab-btn.active {
+      background: linear-gradient(180deg, #FFF0F6, #FFE3EE);
+      border-color: #FF5C8D;
+      color: #C2255C;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 0 #FF85B3;
+    }
+
+    .world-banner-box {
+      border-radius: 20px;
+      padding: 12px 16px;
+      background: linear-gradient(135deg, #F3F0FF, #E7F5FF);
+      border: 2px solid #D0BFFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .levels-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+
+    .level-island-card {
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8F9FA 100%);
+      border: 3px solid #E5DBFF;
+      border-radius: 22px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 6px 0 #D0BFFF;
+      transition: transform 0.16s;
+    }
+
+    .level-island-card:hover:not(.locked) { transform: translateY(-4px); }
+
+    .level-island-card.boss-card {
+      border-color: #FF8787;
+      box-shadow: 0 6px 0 #FA5252;
+      background: linear-gradient(180deg, #FFF5F5 0%, #FFE3E3 100%);
+    }
+
+    .level-island-card.completed {
+      border-color: #8CE99A;
+      box-shadow: 0 6px 0 #51CF66;
+      background: linear-gradient(180deg, #FFFFFF 0%, #EBFBEE 100%);
+    }
+
+    .level-island-card.today-target {
+      border-color: #FCC419;
+      box-shadow: 0 6px 0 #F59F00;
+      animation: pulseTodayCard 1.8s ease-in-out infinite;
+    }
+
+    @keyframes pulseTodayCard {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    .level-island-card.locked {
+      opacity: 0.65;
+      cursor: not-allowed;
+      background: #F1F3F5;
+      border-color: #DEE2E6;
+      box-shadow: 0 5px 0 #CED4DA;
+    }
+
+    .level-tag-badge {
+      font-size: 0.72rem;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #E5DBFF;
+      color: #5F3DC4;
+    }
+
+    .boss-card .level-tag-badge {
+      background: #FA5252;
+      color: #FFFFFF;
+    }
+
+    .level-icon { font-size: 2.1rem; }
+    .level-name { font-size: 0.98rem; font-weight: 900; color: #3A3252; }
+    .level-rule { font-size: 0.78rem; font-weight: 700; color: #6E6488; }
+    .level-stars-row { font-size: 1.05rem; letter-spacing: 2px; }
+
+    /* ==========================================================================
+       3. PLAY SCREEN: WALKING PATH, BOSS HP BAR, STORY BANNER & MINI-GAMES
+       ========================================================================== */
+    .game-top-strip {
+      background: var(--card-white);
+      border: 3px solid #FFFFFF;
+      border-radius: 22px;
+      padding: 10px 16px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .mode-tag-pill {
+      background: linear-gradient(135deg, #E5DBFF, #D0BFFF);
+      color: #4C2889;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      font-size: 0.95rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .progress-track-wrap {
+      flex: 1;
+      min-width: 180px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .progress-bar-outer {
+      flex: 1;
+      height: 22px;
+      background: #EDF2FF;
+      border-radius: 999px;
+      border: 2px solid #DBE4FF;
+      position: relative;
+      overflow: visible;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 15%;
+      background: linear-gradient(90deg, #51CF66, #94D82D, #FFD43B);
+      border-radius: 999px;
+      transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .walking-avatar-pin {
+      position: absolute;
+      top: -10px;
+      left: 10%;
+      font-size: 1.35rem;
+      transition: left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .progress-step-label {
+      font-weight: 900;
+      font-size: 0.92rem;
+      color: #4A3B75;
+      white-space: nowrap;
+    }
+
+    .combo-pill {
+      background: #FFF4E6;
+      border: 2px solid #FFA94D;
+      color: #D9480F;
+      font-weight: 900;
+      font-size: 0.88rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .round-size-switch {
+      display: inline-flex;
+      background: #F3F0FF;
+      border-radius: 999px;
+      padding: 3px;
+      border: 2px solid #E5DBFF;
+    }
+
+    .round-opt-btn {
+      border: none;
+      background: transparent;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #6E6488;
+      cursor: pointer;
+    }
+
+    .round-opt-btn.active { background: #845EF7; color: #FFFFFF; }
+
+    /* Boss HP Battle Bar */
+    .boss-battle-banner {
+      background: linear-gradient(90deg, #FFF5F5, #FFE3E3);
+      border: 3px solid #FF8787;
+      border-radius: 20px;
+      padding: 10px 16px;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .boss-battle-banner.active { display: flex; }
+
+    .boss-avatar-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      color: #C92A2A;
+    }
+
+    .boss-hp-track {
+      flex: 1;
+      min-width: 160px;
+      height: 20px;
+      background: #FFFFFF;
+      border: 2px solid #FA5252;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .boss-hp-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #FF6B6B, #FA5252);
+      transition: width 0.4s ease;
+    }
+
+    /* Gentle Speed Timer Bar (only for maps 26, 28, 30) */
+    .gentle-timer-bar {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: #FFF9DB;
+      border: 2px solid #FFE066;
+      border-radius: 999px;
+      padding: 5px 14px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #8A5A00;
+    }
+
+    .gentle-timer-bar.active { display: flex; }
+
+    .gentle-timer-track {
+      flex: 1;
+      height: 10px;
+      background: #FFFFFF;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .gentle-timer-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #74C0FC, #69DB7C, #FFD43B);
+      transition: width 0.3s linear;
+    }
+
+    /* Play Board */
+    .play-board {
+      background: var(--card-white);
+      border: 4px solid #FFFFFF;
+      border-radius: var(--radius-xl);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .story-quest-strip {
+      background: #FFF9DB;
+      border: 2px solid #FFE066;
+      border-radius: 14px;
+      padding: 7px 12px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #7A5200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .companion-feedback-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(90deg, #FFF5F8, #F3F0FF);
+      border: 2px solid #FFE3EE;
+      border-radius: 20px;
+      padding: 9px 14px;
+    }
+
+    .mini-mascot-box {
+      width: 70px;
+      height: 70px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .feedback-bubble {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .feedback-text {
+      font-size: clamp(1rem, 2.4vw, 1.22rem);
+      font-weight: 800;
+      color: #4A3B75;
+      line-height: 1.35;
+    }
+
+    .feedback-text.correct-msg { color: #2B8A3E; }
+    .feedback-text.encourage-msg { color: #D9480F; }
+
+    .read-question-btn {
+      background: linear-gradient(135deg, #FFD43B, #FCC419);
+      color: #5C3C00;
+      border: 2px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-size: 0.92rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #E69900;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Equation Display */
+    .equation-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #FFFDF2;
+      border: 3px dashed #FFD43B;
+      border-radius: 22px;
+      flex-wrap: wrap;
+    }
+
+    .eq-token {
+      font-size: clamp(1.75rem, 4.8vw, 2.75rem);
+      font-weight: 900;
+      color: #3A3252;
+      line-height: 1.15;
+    }
+
+    .eq-op { color: #FF5C8D; }
+
+    .eq-qmark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 62px;
+      height: 58px;
+      padding: 0 12px;
+      background: #FFE3EE;
+      border: 3px solid #FF85B3;
+      border-radius: 16px;
+      color: #D6336C;
+      font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+      font-weight: 900;
+    }
+
+    .eq-qmark.solved {
+      background: #D3F9D8;
+      border-color: #40C057;
+      color: #2B8A3E;
+    }
+
+    /* Visual & Mini-Game Stage */
+    .visual-stage {
+      background: linear-gradient(180deg, #F8FAFF 0%, #EFF6FF 100%);
+      border: 3px solid #D0EBFF;
+      border-radius: 22px;
+      padding: 14px;
+      min-height: 165px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+    }
+
+    .visual-stage-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #5C6B8A;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stage-helper-btns { display: flex; align-items: center; gap: 8px; }
+
+    .mini-stage-btn {
+      background: #FFFFFF;
+      border: 2px solid #A5D8FF;
+      color: #1971C2;
+      border-radius: 999px;
+      padding: 5px 12px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 2px 0 #74C0FC;
+    }
+
+    .groups-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .object-tray {
+      background: #FFFFFF;
+      border: 2.5px solid #E7F5FF;
+      border-radius: 18px;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-width: 100px;
+      min-height: 76px;
+    }
+
+    .tray-plus-badge {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #FF5C8D;
+      background: #FFE3EE;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .countable-item {
+      width: 54px;
+      height: 58px;
+      border-radius: 14px;
+      background: #FFFDF9;
+      border: 2px solid #F1F0FF;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .countable-item:hover { transform: scale(1.08); border-color: #FFD43B; }
+
+    .countable-item.counted-highlight {
+      background: #FFF9DB;
+      border-color: #FCC419;
+      transform: translateY(-4px) scale(1.06);
+    }
+
+    .countable-item.hopping-away {
+      animation: hopAwayAnim 1.2s ease-in-out forwards;
+    }
+
+    @keyframes hopAwayAnim {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(34px, -22px) rotate(12deg) scale(0.78); opacity: 0.32; filter: grayscale(0.4); }
+    }
+
+    .hop-away-tag {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: #FF8787;
+      color: #FFFFFF;
+      font-size: 0.65rem;
+      font-weight: 900;
+      padding: 1px 5px;
+      border-radius: 999px;
+    }
+
+    .count-num-badge {
+      position: absolute;
+      top: -7px;
+      left: -7px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #FF5C8D;
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      font-weight: 900;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #FFFFFF;
+    }
+
+    .countable-item.counted-highlight .count-num-badge { display: inline-flex; }
+
+    /* Interactive Mini-Game Controls Inside Stage */
+    .minigame-zone {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* 1) Drag/Tap to Basket Mini-game */
+    .basket-dropzone {
+      background: #FFF9DB;
+      border: 3px dashed #FAB005;
+      border-radius: 20px;
+      padding: 12px 18px;
+      min-width: 240px;
+      min-height: 82px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .basket-items-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      min-height: 42px;
+    }
+
+    .minigame-action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .mg-pill-btn {
+      background: linear-gradient(135deg, #74C0FC, #339AF0);
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #1971C2;
+    }
+
+    .mg-pill-btn.submit-green {
+      background: linear-gradient(135deg, #51CF66, #2B8A3E);
+      box-shadow: 0 4px 0 #237032;
+    }
+
+    /* 2) Number Line Hop Mini-game */
+    .number-line-wrap {
+      width: 100%;
+      overflow-x: auto;
+      padding: 18px 8px 8px;
+    }
+
+    .number-line-track {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-width: 480px;
+      position: relative;
+      padding-top: 26px;
+      border-bottom: 4px solid #74C0FC;
+    }
+
+    .nl-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      padding: 4px 6px;
+      position: relative;
+    }
+
+    .nl-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 3px solid #339AF0;
+      font-weight: 900;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1971C2;
+      transition: transform 0.15s, background 0.15s;
+    }
+
+    .nl-node.active-hop .nl-dot {
+      background: #FFD43B;
+      border-color: #E67700;
+      transform: scale(1.22);
+      color: #5C3C00;
+    }
+
+    .nl-hopper {
+      position: absolute;
+      top: -28px;
+      font-size: 1.5rem;
+      animation: mascotBounce 0.9s infinite;
+    }
+
+    /* 3) Balance Scale Mini-game */
+    .scale-svg-box {
+      width: 280px;
+      height: 110px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* 4) Balloon Pop Mini-game */
+    .balloons-stage {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 8px;
+    }
+
+    .balloon-btn {
+      width: 78px;
+      height: 94px;
+      border-radius: 50% 50% 46% 46%;
+      border: 3px solid #FFFFFF;
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: #FFFFFF;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+      animation: floatGentle 2.8s ease-in-out infinite;
+    }
+
+    .balloon-btn::after {
+      content: "";
+      position: absolute;
+      bottom: -16px;
+      width: 2px;
+      height: 16px;
+      background: #ADB5BD;
+    }
+
+    /* 5) Match Pairs Mini-game */
+    .pairs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      max-width: 460px;
+    }
+
+    .pair-card-btn {
+      background: #FFFFFF;
+      border: 3px solid #A5D8FF;
+      border-radius: 16px;
+      padding: 12px 8px;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #1971C2;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #74C0FC;
+    }
+
+    .pair-card-btn.selected {
+      background: #FFF9DB;
+      border-color: #FAB005;
+      color: #8A5A00;
+      transform: translateY(-2px);
+    }
+
+    .pair-card-btn.matched {
+      background: #D3F9D8;
+      border-color: #40C057;
+      color: #2B8A3E;
+      opacity: 0.65;
+      cursor: default;
+    }
+
+    /* 4 Answer Choice Buttons */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .choices-grid.equation-choices {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .answer-btn {
+      border: 4px solid #FFFFFF;
+      border-radius: 22px;
+      padding: 14px 10px;
+      min-height: 76px;
+      font-size: clamp(1.65rem, 4.2vw, 2.25rem);
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.14s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .choices-grid.equation-choices .answer-btn {
+      font-size: clamp(1.25rem, 3.2vw, 1.65rem);
+      min-height: 70px;
+    }
+
+    .answer-btn.opt-0 { background: linear-gradient(180deg, #FF9EBB 0%, #FF75A0 100%); color: #FFFFFF; box-shadow: 0 6px 0 #D64575; }
+    .answer-btn.opt-1 { background: linear-gradient(180deg, #74C0FC 0%, #4DABF7 100%); color: #FFFFFF; box-shadow: 0 6px 0 #1971C2; }
+    .answer-btn.opt-2 { background: linear-gradient(180deg, #FFE066 0%, #FCC419 100%); color: #5C3C00; box-shadow: 0 6px 0 #D98200; }
+    .answer-btn.opt-3 { background: linear-gradient(180deg, #B197FC 0%, #9775FA 100%); color: #FFFFFF; box-shadow: 0 6px 0 #6741D9; }
+
+    .answer-btn.correct-pick {
+      background: linear-gradient(180deg, #69DB7C 0%, #40C057 100%) !important;
+      color: #FFFFFF !important;
+      box-shadow: 0 6px 0 #2B8A3E !important;
+    }
+
+    .answer-btn.gentle-retry { opacity: 0.45; transform: scale(0.96); }
+    .answer-btn.guided-glow { animation: guidedAnswerGlow 1s ease-in-out infinite; }
+
+    @keyframes guidedAnswerGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 4px rgba(255, 212, 59, 0.7), 0 6px 0 #2B8A3E; }
+      50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 212, 59, 0.95), 0 6px 0 #2B8A3E; }
+    }
+
+    .question-footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hint-explanation-box {
+      flex: 1;
+      background: #FFF9DB;
+      border: 2px solid #FFE066;
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #7A5200;
+      display: none;
+    }
+
+    .hint-explanation-box.visible { display: block; }
+
+    .next-question-btn {
+      background: linear-gradient(135deg, #51CF66, #37B24D);
+      color: #FFFFFF;
+      border: 3px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 11px 24px;
+      font-size: 1.1rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #2B8A3E;
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .next-question-btn.visible { display: inline-flex; }
+
+    /* ==========================================================================
+       4. REWARDS, STICKER BOOK, KID RECORDS & PARENT ZONE
+       ========================================================================== */
+    .rewards-summary-banner {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .reward-stat-box {
+      background: linear-gradient(180deg, #FFFDF2, #FFF3BF);
+      border: 3px solid #FFE066;
+      border-radius: 20px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 4px;
+    }
+
+    .reward-stat-num { font-size: 1.65rem; font-weight: 900; color: #D9480F; }
+    .reward-stat-label { font-size: 0.88rem; font-weight: 800; color: #6B4C00; }
+
+    .gift-chest-banner {
+      background: linear-gradient(135deg, #FFE3EE, #F3D9FA);
+      border: 3px solid #FFADCA;
+      border-radius: 22px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .open-gift-btn {
+      background: linear-gradient(135deg, #FF5C8D, #F03E3E);
+      color: #FFFFFF;
+      border: 3px solid #FFFFFF;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #C92A2A;
+    }
+
+    .open-gift-btn:disabled {
+      background: #CED4DA;
+      color: #868E96;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .shop-grid, .trophies-grid, .stickers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+      gap: 10px;
+    }
+
+    .shop-item-card, .trophy-card, .sticker-card {
+      background: #FFFFFF;
+      border: 3px solid #E9ECEF;
+      border-radius: 18px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+    }
+
+    .shop-item-card.equipped { border-color: #51CF66; background: #EBFBEE; }
+    .trophy-card.locked, .sticker-card.locked { filter: grayscale(1); opacity: 0.55; background: #F8F9FA; }
+    .sticker-card { border-color: #FFD966; background: #FFFDF7; }
+
+    .shop-item-icon { font-size: 2rem; height: 48px; display: flex; align-items: center; justify-content: center; }
+    .shop-item-name { font-weight: 900; font-size: 0.95rem; color: #3A3252; }
+
+    .shop-act-btn {
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .shop-act-btn.btn-equip { background: #74C0FC; color: #FFFFFF; }
+    .shop-act-btn.btn-equipped { background: #40C057; color: #FFFFFF; }
+    .shop-act-btn.btn-buy { background: #FFD43B; color: #5C3C00; }
+
+    /* Stats & Parent Zone */
+    .stats-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+      gap: 10px;
+    }
+
+    .stat-metric-card {
+      background: #F8F9FA;
+      border: 2.5px solid #E9ECEF;
+      border-radius: 18px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stat-metric-title { font-size: 0.86rem; font-weight: 800; color: #6E6488; }
+    .stat-metric-val { font-size: 1.45rem; font-weight: 900; color: #3A3252; }
+
+    .settings-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 11px 14px;
+      background: #F8F9FA;
+      border-radius: 16px;
+      flex-wrap: wrap;
+    }
+
+    .settings-label { font-weight: 800; font-size: 0.96rem; color: #3A3252; }
+    .pill-Segmented { display: inline-flex; gap: 6px; flex-wrap: wrap; }
+
+    .seg-btn {
+      border: 2px solid #D0BFFF;
+      background: #FFFFFF;
+      color: #5F3DC4;
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+    }
+
+    .seg-btn.active { background: #7950F2; color: #FFFFFF; border-color: #7950F2; }
+
+    .danger-reset-btn {
+      background: #FFE3E3;
+      border: 2px solid #FFA8A8;
+      color: #C92A2A;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .practice-needed-box {
+      background: #FFF9DB;
+      border: 2px solid #FFE066;
+      border-radius: 16px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(42, 32, 68, 0.55);
+      backdrop-filter: blur(4px);
+      z-index: 150;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open { display: flex; }
+
+    .modal-card {
+      background: #FFFFFF;
+      border: 5px solid #FFE066;
+      border-radius: 28px;
+      max-width: 480px;
+      width: 100%;
+      padding: 22px 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-title { font-size: 1.55rem; font-weight: 900; color: #FF5C8D; }
+    .modal-desc { font-size: 1rem; font-weight: 700; color: #4A3B75; line-height: 1.45; }
+    .modal-btn-row { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; flex-wrap: wrap; }
+
+    .modal-primary-btn {
+      background: linear-gradient(135deg, #FF85B3, #FF5C8D);
+      color: #FFFFFF;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 22px;
+      font-size: 1.02rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #D6336C;
+    }
+
+    .modal-secondary-btn {
+      background: #EDF2FF;
+      color: #364FC7;
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #BAC8FF;
+    }
+
+    @media (max-width: 740px) {
+      .modes-grid { grid-template-columns: repeat(2, 1fr); }
+      .choices-grid { grid-template-columns: repeat(2, 1fr); }
+      .world-tabs-bar { grid-template-columns: repeat(3, 1fr); }
+      .levels-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-card { flex-direction: column; text-align: center; }
+      .home-main-cta-grid { grid-template-columns: 1fr; }
+      .rewards-summary-banner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Decorative Animated Background -->
+  <div class="world-bg" aria-hidden="true">
+    <svg class="bg-rainbow" viewBox="0 0 300 180" fill="none">
+      <path d="M20 170 A130 130 0 0 1 280 170" stroke="#FF9EBB" stroke-width="14" stroke-linecap="round"/>
+      <path d="M36 170 A114 114 0 0 1 264 170" stroke="#FFD97D" stroke-width="14" stroke-linecap="round"/>
+      <path d="M52 170 A98 98 0 0 1 248 170" stroke="#9BF6FF" stroke-width="14" stroke-linecap="round"/>
+      <path d="M68 170 A82 82 0 0 1 232 170" stroke="#CDB4DB" stroke-width="14" stroke-linecap="round"/>
+    </svg>
+    <svg class="bg-planet" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="26" fill="#FFD6E0"/>
+      <circle cx="42" cy="42" r="5" fill="#FFACC5"/>
+      <circle cx="58" cy="56" r="4" fill="#FFACC5"/>
+      <ellipse cx="50" cy="52" rx="44" ry="12" transform="rotate(-18 50 52)" stroke="#FFF3B0" stroke-width="6"/>
+    </svg>
+    <svg class="bg-cloud cloud-1" viewBox="0 0 140 80" fill="none">
+      <path d="M32 68 H110 A20 20 0 0 0 112 28 A26 26 0 0 0 64 18 A24 24 0 0 0 24 34 A18 18 0 0 0 32 68 Z" fill="#FFFFFF"/>
+      <circle cx="56" cy="46" r="3" fill="#4A3B75"/><circle cx="84" cy="46" r="3" fill="#4A3B75"/>
+      <path d="M66 49 Q70 54 74 49" stroke="#4A3B75" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <svg class="bg-cloud cloud-2" viewBox="0 0 140 80" fill="none">
+      <path d="M32 68 H110 A20 20 0 0 0 112 28 A26 26 0 0 0 64 18 A24 24 0 0 0 24 34 A18 18 0 0 0 32 68 Z" fill="#FFFFFF"/>
+    </svg>
+    <svg class="bg-cloud cloud-3" viewBox="0 0 140 80" fill="none">
+      <path d="M32 68 H110 A20 20 0 0 0 112 28 A26 26 0 0 0 64 18 A24 24 0 0 0 24 34 A18 18 0 0 0 32 68 Z" fill="#FFFFFF"/>
+    </svg>
+    <svg class="bg-star star-1" width="28" height="28" viewBox="0 0 32 32"><path d="M16 2 L20 11 L30 12 L22 19 L24 29 L16 24 L8 29 L10 19 L2 12 L12 11 Z" fill="#FFE066"/></svg>
+    <svg class="bg-star star-2" width="22" height="22" viewBox="0 0 32 32"><path d="M16 2 L20 11 L30 12 L22 19 L24 29 L16 24 L8 29 L10 19 L2 12 L12 11 Z" fill="#FF9EBB"/></svg>
+    <svg class="bg-star star-3" width="26" height="26" viewBox="0 0 32 32"><path d="M16 2 L20 11 L30 12 L22 19 L24 29 L16 24 L8 29 L10 19 L2 12 L12 11 Z" fill="#FFE066"/></svg>
+    <svg class="bg-star star-4" width="24" height="24" viewBox="0 0 32 32"><path d="M16 2 L20 11 L30 12 L22 19 L24 29 L16 24 L8 29 L10 19 L2 12 L12 11 Z" fill="#CDB4DB"/></svg>
+    <svg class="bg-hills" viewBox="0 0 1440 140" preserveAspectRatio="none">
+      <path d="M0 80 Q360 10 720 75 T1440 60 L1440 140 L0 140 Z" fill="#C7F9CC" opacity="0.65"/>
+      <path d="M0 100 Q420 40 900 95 T1440 85 L1440 140 L0 140 Z" fill="#95D5B2" opacity="0.55"/>
+    </svg>
+    <div class="bg-flower flower-1">🌸</div>
+    <div class="bg-flower flower-2">🌼</div>
+    <div class="bg-flower flower-3">🌷</div>
+    <div class="bg-flower flower-4">🌻</div>
+  </div>
+
+  <canvas id="fxCanvas"></canvas>
+
+  <div class="app-shell">
+    <!-- Top Status & Navigation Bar -->
+    <header class="top-bar">
+      <div class="brand-group">
+        <button type="button" class="home-pill-btn" id="topHomeBtn" onclick="navigateScreen('home')">
+          <span>🏠</span>
+          <span>数学乐园</span>
+        </button>
+      </div>
+
+      <div class="reward-pills">
+        <button type="button" class="stat-pill streak-pill" id="topStreakPill" onclick="navigateScreen('challenges')" title="连续冒险打卡天数">
+          <span>🔥</span>
+          <span id="topStreakCount">1天</span>
+        </button>
+        <button type="button" class="stat-pill" id="topStarPill" onclick="navigateScreen('rewards')" title="查看我的星星">
+          <span>⭐</span>
+          <span id="topStarCount">0</span>
+        </button>
+        <button type="button" class="stat-pill trophy-pill" id="topTrophyPill" onclick="navigateScreen('rewards')" title="查看我的奖杯与贴纸">
+          <span>🏆</span>
+          <span id="topTrophyCount">0</span>
+        </button>
+        <button type="button" class="stat-pill gift-pill" id="topGiftPill" onclick="navigateScreen('rewards')" title="神秘礼物">
+          <span>🎁</span>
+          <span id="topGiftBadge">礼物</span>
+        </button>
+      </div>
+
+      <div class="top-actions">
+        <button type="button" class="icon-circle-btn" id="bgmToggleBtn" onclick="toggleBgm()" title="背景音乐开关" aria-label="背景音乐开关">🎵</button>
+        <button type="button" class="icon-circle-btn" id="sfxToggleBtn" onclick="toggleSfx()" title="音效与语音开关" aria-label="音效与语音开关">🔊</button>
+        <button type="button" class="icon-circle-btn" id="fullscreenBtn" onclick="toggleFullscreen()" title="全屏模式" aria-label="全屏模式">⛶</button>
+        <button type="button" class="parent-top-btn" id="parentModeBtn" onclick="openParentGate()">🔒 家长</button>
+      </div>
+    </header>
+
+    <!-- ================= SCREEN 1: HOME SCREEN ================= -->
+    <section id="screen-home" class="screen active">
+      <div class="hero-card">
+        <div class="mascot-stage" id="homeMascotStage" onclick="interactWithMascot()">
+          <div id="homeMascotSvg" class="mascot-svg-wrap mascot-anim-wave"></div>
+          <span id="homeMascotName" class="mascot-name-tag">团团兔</span>
+        </div>
+
+        <div class="hero-text-box">
+          <h1 class="welcome-title">欢迎来到数学乐园！</h1>
+          <p class="welcome-subtitle">
+            <span>🌈 今天也要加油哦！30天数学大冒险等你出发！</span>
+          </p>
+          <div class="speech-bubble">
+            <span id="homeSpeechText">嗨！小朋友，每天闯一关，6大奇幻世界等你来探索哦！</span>
+            <button type="button" class="speak-mini-btn" id="homeSpeakGreetingBtn" onclick="speakGreeting()" title="听团团说话">🔊</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Daily Adventure Banner & Warm-Up Review Button -->
+      <div class="daily-quest-banner">
+        <div class="daily-quest-info">
+          <div class="daily-quest-title">
+            <span id="homeTodayMapBadge">🗺️ 今日冒险：第 1 关 · 糖果乐园</span>
+          </div>
+          <p class="daily-quest-sub" id="homeDailyStatusSub">每天解锁 1 个新地图（约5-8分钟），集齐 2 颗星即可通关！</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="warmup-pill-btn" id="btnDailyWarmup" onclick="startWarmupReview()">🌅 每日热身 (3题)</button>
+        </div>
+      </div>
+
+      <!-- 4 Main Home Buttons -->
+      <div class="home-main-cta-grid">
+        <button type="button" class="big-cta-btn cta-start" id="btnStartLearning" onclick="handleStartLearningButton()">
+          <div class="cta-icon-bubble">🚀</div>
+          <div class="cta-label-group">
+            <span class="cta-title">开始学习</span>
+            <span class="cta-desc">趣味加法、减法与看图算数</span>
+          </div>
+        </button>
+
+        <button type="button" class="big-cta-btn cta-challenge" id="btnMathChallenges" onclick="navigateScreen('challenges')">
+          <div class="cta-icon-bubble">🏰</div>
+          <div class="cta-label-group">
+            <span class="cta-title">数学闯关</span>
+            <span class="cta-desc">彩虹岛大冒险与随机挑战</span>
+          </div>
+        </button>
+
+        <button type="button" class="big-cta-btn cta-rewards" id="btnMyRewards" onclick="navigateScreen('rewards')">
+          <div class="cta-icon-bubble">🎁</div>
+          <div class="cta-label-group">
+            <span class="cta-title">我的奖励</span>
+            <span class="cta-desc">星星商店、奖杯与神秘礼物</span>
+          </div>
+        </button>
+
+        <button type="button" class="big-cta-btn cta-records" id="btnLearningRecords" onclick="navigateScreen('records')">
+          <div class="cta-icon-bubble">📖</div>
+          <div class="cta-label-group">
+            <span class="cta-title">学习记录</span>
+            <span class="cta-desc">看看我学会了多少道数学题</span>
+          </div>
+        </button>
+      </div>
+
+      <!-- Direct Free Practice Mode Cards -->
+      <h2 class="section-heading">✨ 自由练习模式（随时无限畅玩）：</h2>
+      <div class="modes-grid">
+        <button type="button" class="mode-card mode-add" id="modeCardAddition" onclick="startLearningMode('addition')">
+          <div class="mode-badge-icon">➕</div>
+          <span class="mode-card-title">加法</span>
+          <span class="mode-card-sub">合在一起数一数</span>
+        </button>
+
+        <button type="button" class="mode-card mode-sub" id="modeCardSubtraction" onclick="startLearningMode('subtraction')">
+          <div class="mode-badge-icon">➖</div>
+          <span class="mode-card-title">减法</span>
+          <span class="mode-card-sub">小动物跳走啦</span>
+        </button>
+
+        <button type="button" class="mode-card mode-pic" id="modeCardPicture" onclick="startLearningMode('picture')">
+          <div class="mode-badge-icon">🍎</div>
+          <span class="mode-card-title">看图算数</span>
+          <span class="mode-card-sub">看可愛图案选答案</span>
+        </button>
+
+        <button type="button" class="mode-card mode-rnd" id="modeCardRandom" onclick="startLearningMode('random')">
+          <div class="mode-badge-icon">🎲</div>
+          <span class="mode-card-title">随机挑战</span>
+          <span class="mode-card-sub">聪明小脑袋大比拼</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 2: PLAY / ADVENTURE STAGE ================= -->
+    <section id="screen-play" class="screen">
+      <div class="game-top-strip">
+        <div class="mode-tag-pill" id="playModeLabel">🗺️ 第 1 关</div>
+
+        <!-- Walking Character Progress Path -->
+        <div class="progress-track-wrap">
+          <span style="font-size:1.15rem;">🚩</span>
+          <div class="progress-bar-outer">
+            <div class="progress-bar-fill" id="roundProgressBar"></div>
+            <div class="walking-avatar-pin" id="walkingAvatarPin">🐰</div>
+          </div>
+          <span style="font-size:1.15rem;" id="pathGoalIcon">🎁</span>
+          <span class="progress-step-label" id="roundStepText">第 1 / 8 题</span>
+        </div>
+
+        <span class="combo-pill" id="comboStreakBadge">🔥 连击 x0</span>
+
+        <div class="round-size-switch" title="选择自由练习每轮题数">
+          <button type="button" class="round-opt-btn active" id="roundSize5Btn" onclick="setRoundLength(5)">5题/轮</button>
+          <button type="button" class="round-opt-btn" id="roundSize10Btn" onclick="setRoundLength(10)">10题/轮</button>
+        </div>
+      </div>
+
+      <!-- Boss HP Bar (Shown on Maps 5, 10, 15, 20, 25, 30) -->
+      <div class="boss-battle-banner" id="bossBattleBanner">
+        <div class="boss-avatar-info">
+          <span id="bossEmojiIcon" style="font-size:2rem;">🦖</span>
+          <div>
+            <div id="bossNameTitle">守关大魔王</div>
+            <div style="font-size:0.78rem;color:#E03131;">每答对一题就会发射星星光线击败它！答错不会扣血哦！</div>
+          </div>
+        </div>
+        <div class="boss-hp-track">
+          <div class="boss-hp-fill" id="bossHpFill"></div>
+        </div>
+        <span id="bossHpText" style="font-weight:900;color:#C92A2A;">HP 100%</span>
+      </div>
+
+      <!-- Optional Gentle Speed Timer (Only on speed-round maps 26, 28, 30) -->
+      <div class="gentle-timer-bar" id="gentleTimerBar">
+        <span>⏳ 彩虹沙漏（慢慢算也不扣分哦）：</span>
+        <div class="gentle-timer-track">
+          <div class="gentle-timer-fill" id="gentleTimerFill"></div>
+        </div>
+      </div>
+
+      <div class="play-board">
+        <!-- Story Quest Intro Strip -->
+        <div class="story-quest-strip" id="storyQuestStrip">
+          <span id="storyQuestText">📖 冒险任务：帮团团兔收集甜甜的糖果吧！</span>
+          <span id="miniGameTypeBadge" style="background:#FFFFFF;padding:2px 10px;border-radius:999px;color:#D6336C;">趣味互动</span>
+        </div>
+
+        <!-- Companion & Live Feedback -->
+        <div class="companion-feedback-row">
+          <div class="mini-mascot-box" id="playMascotBox" onclick="readCurrentQuestion()">
+            <div id="playMascotSvg" class="mascot-svg-wrap mascot-anim-wave" style="width:68px;height:68px;"></div>
+          </div>
+          <div class="feedback-bubble">
+            <div class="feedback-text" id="playFeedbackText">数一数下面的图案，完成小挑战吧！</div>
+            <button type="button" class="read-question-btn" id="readQuestionBtn" onclick="readCurrentQuestion()">
+              <span>🔊</span>
+              <span>读题</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Equation Banner -->
+        <div class="equation-display" id="equationBanner">
+          <span class="eq-token" id="eqPart1">2</span>
+          <span class="eq-token eq-op" id="eqOperator">+</span>
+          <span class="eq-token" id="eqPart2">3</span>
+          <span class="eq-token" id="eqEqualsSign">=</span>
+          <span class="eq-qmark" id="eqAnswerSlot">?</span>
+        </div>
+
+        <!-- Visual Object & Interactive Mini-Game Stage -->
+        <div class="visual-stage">
+          <div class="visual-stage-header">
+            <span id="visualInstruction">👆 点一点图案或完成下方趣味互动吧！</span>
+            <div class="stage-helper-btns">
+              <button type="button" class="mini-stage-btn" id="replayAnimBtn" onclick="replaySubtractionAnimation()" style="display:none;">🔄 再看一遍跳走动画</button>
+              <button type="button" class="mini-stage-btn" id="countTogetherBtn" onclick="triggerVisualCountHint()">✨ 跟我一起数</button>
+            </div>
+          </div>
+
+          <div class="groups-container" id="visualGroupsContainer"></div>
+          <div class="minigame-zone" id="miniGameInteractiveZone"></div>
+        </div>
+
+        <!-- 4 Answer Buttons (Used alongside or hidden when pure pair/basket mini-game is active) -->
+        <div class="choices-grid" id="answerChoicesGrid">
+          <button type="button" class="answer-btn opt-0" id="ansBtn0" onclick="selectAnswer(0)">4</button>
+          <button type="button" class="answer-btn opt-1" id="ansBtn1" onclick="selectAnswer(1)">5</button>
+          <button type="button" class="answer-btn opt-2" id="ansBtn2" onclick="selectAnswer(2)">6</button>
+          <button type="button" class="answer-btn opt-3" id="ansBtn3" onclick="selectAnswer(3)">7</button>
+        </div>
+
+        <!-- Hint & Next Question Bar -->
+        <div class="question-footer-bar">
+          <div class="hint-explanation-box" id="hintExplanationBox"></div>
+          <button type="button" class="next-question-btn" id="nextQuestionBtn" onclick="goToNextQuestion()">
+            <span>下一题</span>
+            <span>➡️</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 3: 30-MAP ADVENTURE WORLD MAP ================= -->
+    <section id="screen-challenges" class="screen">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h2 class="panel-title">🗺️ 30天数学大冒险（6大奇幻世界）</h2>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="warmup-pill-btn" id="mapWarmupBtn" onclick="startWarmupReview()">🌅 错题热身 (3题)</button>
+            <button type="button" class="modal-primary-btn" id="quickRandomChallengeBtn" onclick="startLearningMode('random')">🎲 立即开始随机挑战</button>
+          </div>
+        </div>
+
+        <!-- Daily Unlock Status, Streak & Calendar -->
+        <div class="daily-status-card">
+          <div>
+            <div style="font-weight:900;font-size:1.05rem;color:#5F3DC4;" id="dailyAdventureHeadline">
+              🌟 今日已解锁至第 1 关（通关需至少获得 2 颗星 ⭐⭐）
+            </div>
+            <div style="font-size:0.86rem;font-weight:700;color:#6E6488;margin-top:3px;" id="dailyComeBackBanner">
+              已通关的地图可随时进入【练习模式】复习，每天解锁 1 个全新关卡！
+            </div>
+          </div>
+          <div class="countdown-badge" id="dailyCountdownBadge">
+            <span>⏰ 明日新关倒计时：</span>
+            <span id="countdownClockText">--:--:--</span>
+          </div>
+        </div>
+
+        <!-- Recent 7-Day Adventure Check-in Calendar -->
+        <div class="calendar-strip" id="adventureCalendarStrip"></div>
+
+        <!-- 6 Worlds Selector Tabs -->
+        <div class="world-tabs-bar" id="worldTabsBar"></div>
+
+        <!-- Active World Description Banner -->
+        <div class="world-banner-box" id="activeWorldBanner"></div>
+
+        <!-- 5 Maps of Selected World -->
+        <div class="levels-grid" id="challengeLevelsGrid"></div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 4: MY REWARDS & STICKER BOOK ================= -->
+    <section id="screen-rewards" class="screen">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h2 class="panel-title">🎁 我的奖励百宝箱与贴纸图鉴</h2>
+          <button type="button" class="modal-secondary-btn" id="rewardsBackHomeBtn" onclick="navigateScreen('home')">返回首页</button>
+        </div>
+
+        <div class="rewards-summary-banner">
+          <div class="reward-stat-box">
+            <span class="reward-stat-num" id="rewardStarTotal">0</span>
+            <span class="reward-stat-label">⭐ 可用星星</span>
+          </div>
+          <div class="reward-stat-box">
+            <span class="reward-stat-num" id="rewardTrophyTotal">0 / 8</span>
+            <span class="reward-stat-label">🏆 荣誉奖杯</span>
+          </div>
+          <div class="reward-stat-box">
+            <span class="reward-stat-num" id="rewardGiftTotal">0</span>
+            <span class="reward-stat-label">🎁 已拆神秘礼物</span>
+          </div>
+        </div>
+
+        <!-- Mystery Gift Box -->
+        <div class="gift-chest-banner">
+          <div>
+            <h3 style="font-size:1.15rem;font-weight:900;color:#C2255C;">🎁 神秘礼物盲盒</h3>
+            <p id="giftMilestoneText" style="font-size:0.92rem;font-weight:700;color:#6E6488;margin-top:4px;">
+              每累计答对 5 道题，就能打开一个神秘礼物盒！
+            </p>
+          </div>
+          <button type="button" class="open-gift-btn" id="openMysteryGiftBtn" onclick="openMysteryGift()">🎁 打开神秘礼物</button>
+        </div>
+
+        <!-- Collectible World Sticker Book -->
+        <h3 class="section-heading">📒 6大世界冒险贴纸册（通关地图自动收集）：</h3>
+        <div class="stickers-grid" id="stickerBookGrid"></div>
+
+        <!-- Star Shop -->
+        <h3 class="section-heading">🐾 伙伴与装扮商店（用星星免费解锁）：</h3>
+        <div class="shop-grid" id="shopItemsGrid"></div>
+
+        <!-- Trophies Cabinet -->
+        <h3 class="section-heading">🏆 我的闪亮奖杯柜：</h3>
+        <div class="trophies-grid" id="trophiesGrid"></div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 5: KID LEARNING RECORDS ================= -->
+    <section id="screen-records" class="screen">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h2 class="panel-title">📖 我的学习成长足迹</h2>
+          <button type="button" class="modal-secondary-btn" id="recordsBackHomeBtn" onclick="navigateScreen('home')">返回首页</button>
+        </div>
+
+        <div class="stats-cards-grid">
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">📝 完成题目总数</span>
+            <span class="stat-metric-val" id="kidStatTotalQ">0 题</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">🌟 答对题目总数</span>
+            <span class="stat-metric-val" id="kidStatCorrectQ">0 题</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">🗺️ 已通关冒险地图</span>
+            <span class="stat-metric-val" id="kidStatLevels">0 / 30 关</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">🔥 最高连对记录</span>
+            <span class="stat-metric-val" id="kidStatBestStreak">0 连对</span>
+          </div>
+        </div>
+
+        <h3 class="section-heading">🌈 各科目小达人进度：</h3>
+        <div class="stats-cards-grid">
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">➕ 加法练习</span>
+            <span class="stat-metric-val" id="kidAddProgress">0 / 0 答对</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">➖ 减法练习</span>
+            <span class="stat-metric-val" id="kidSubProgress">0 / 0 答对</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">🍎 看图与互动游戏</span>
+            <span class="stat-metric-val" id="kidPicProgress">0 / 0 答对</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= SCREEN 6: PARENT ZONE (家长专区) ================= -->
+    <section id="screen-parent" class="screen">
+      <div class="panel-card">
+        <div class="panel-header">
+          <h2 class="panel-title">👨‍👩‍👧 家长专区与教学管理</h2>
+          <button type="button" class="modal-secondary-btn" id="parentBackHomeBtn" onclick="navigateScreen('home')">返回儿童首页</button>
+        </div>
+
+        <!-- Overall Stats -->
+        <div class="stats-cards-grid">
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">总完成题数</span>
+            <span class="stat-metric-val" id="parentTotalQ">0</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">答对题数 / 综合正确率</span>
+            <span class="stat-metric-val" id="parentAccuracy">0 (0%)</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">累计获得星星</span>
+            <span class="stat-metric-val" id="parentTotalStars">0 ⭐</span>
+          </div>
+          <div class="stat-metric-card">
+            <span class="stat-metric-title">加法正确率 vs 减法正确率</span>
+            <span class="stat-metric-val" id="parentAddSubSplit" style="font-size:1.15rem;">加法 0% | 减法 0%</span>
+          </div>
+        </div>
+
+        <!-- Per-Skill Accuracy Breakdown (6 Skills) -->
+        <h3 class="section-heading">📊 6大核心数学能力正确率分析：</h3>
+        <div class="stats-cards-grid" id="parentSkillBreakdownGrid"></div>
+
+        <!-- Needs More Practice List -->
+        <div class="practice-needed-box">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+            <span style="font-weight:900;color:#D9480F;">📌 需要多练习的薄弱点与错题本：</span>
+            <button type="button" class="seg-btn active" id="parentPracticeMistakesBtn" onclick="startWarmupReview()">立即复习错题</button>
+          </div>
+          <div id="parentNeedsPracticeList" style="font-size:0.9rem;font-weight:700;color:#5C3C00;line-height:1.5;"></div>
+        </div>
+
+        <!-- Daily Limit Toggle & Jump to Any Map (1-30) -->
+        <div class="settings-row">
+          <div>
+            <span class="settings-label">📅 每日一关解锁限制 (Daily Limit ON/OFF)</span>
+            <p style="font-size:0.82rem;color:#6E6488;">开启时每天仅解锁1个新关卡；关闭后可自由挑战全部30关</p>
+          </div>
+          <button type="button" class="seg-btn active" id="parentDailyLimitBtn" onclick="toggleDailyLimitSetting()">开启 (每日1关)</button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">🚀 快速跳关器 (直接进入任意地图 1–30)</span>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <select id="parentJumpMapSelect" style="padding:7px 12px;border-radius:12px;border:2px solid #D0BFFF;font-weight:800;color:#4A3B75;"></select>
+            <button type="button" class="seg-btn active" id="parentJumpMapBtn" onclick="parentJumpToSelectedMap()">立即进入该关</button>
+          </div>
+        </div>
+
+        <!-- Existing Number Range, Round Size & Audio Settings -->
+        <div class="settings-row">
+          <span class="settings-label">🔢 自由练习数字难度范围设置</span>
+          <div class="pill-Segmented">
+            <button type="button" class="seg-btn" id="rangeBtn10" onclick="setNumberRange('10')">0–10 基础</button>
+            <button type="button" class="seg-btn" id="rangeBtn20" onclick="setNumberRange('20')">0–20 进阶</button>
+            <button type="button" class="seg-btn active" id="rangeBtnAuto" onclick="setNumberRange('auto')">智能进阶 (0–10→20)</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">📋 自由练习每轮题目数量</span>
+          <div class="pill-Segmented">
+            <button type="button" class="seg-btn active" id="parentRound5Btn" onclick="setRoundLength(5)">5 题 / 轮</button>
+            <button type="button" class="seg-btn" id="parentRound10Btn" onclick="setRoundLength(10)">10 题 / 轮</button>
+          </div>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">🎵 背景音乐 (BGM)</span>
+          <button type="button" class="seg-btn active" id="parentBgmBtn" onclick="toggleBgm()">已开启</button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">🔊 游戏音效与普通话语音朗读</span>
+          <button type="button" class="seg-btn active" id="parentSfxBtn" onclick="toggleSfx()">已开启</button>
+        </div>
+
+        <div class="settings-row">
+          <span class="settings-label">🎚️ 音量大小调节 (<span id="volumePercentText">80%</span>)</span>
+          <input type="range" id="volumeSlider" min="0" max="100" value="80" oninput="updateVolume(this.value)" style="width:200px;accent-color:#7950F2;cursor:pointer;" />
+        </div>
+
+        <div class="settings-row" style="background:#FFF5F5;border:1.5px solid #FFC9C9;">
+          <div>
+            <span class="settings-label" style="color:#C92A2A;">🗑️ 重置所有学习进度</span>
+            <p style="font-size:0.84rem;color:#868E96;margin-top:2px;">清空星星、奖杯、贴纸、打卡记录与所有统计数据</p>
+          </div>
+          <button type="button" class="danger-reset-btn" id="openResetConfirmBtn" onclick="openResetConfirmModal()">重置学习数据</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= MODAL 1: ROUND / MAP COMPLETE ================= -->
+  <div class="modal-backdrop" id="roundCompleteModal">
+    <div class="modal-card">
+      <div id="modalCelebrationMascot" style="width:98px;height:98px;"></div>
+      <div id="roundModalStarRow" style="font-size:2.2rem;letter-spacing:4px;">⭐⭐⭐</div>
+      <h3 class="modal-title" id="roundModalTitle">🎉 太棒啦！闯关成功！</h3>
+      <p class="modal-desc" id="roundModalStats">本关答对 8 / 8 题，获得 +10 颗闪亮星星 ⭐！</p>
+      <div id="roundModalUnlockNotice" style="background:#FFF9DB;border:2px solid #FFE066;padding:8px 14px;border-radius:14px;font-weight:800;color:#8A5A00;display:none;"></div>
+      <div id="roundModalDailyTomorrowBox" style="background:#E7F5FF;border:2px solid #74C0FC;padding:10px 14px;border-radius:14px;font-weight:800;color:#1971C2;font-size:0.9rem;display:none;"></div>
+      <div class="modal-btn-row">
+        <button type="button" class="modal-primary-btn" id="playAgainRoundBtn" onclick="playAnotherRound()">🔄 再玩一轮</button>
+        <button type="button" class="modal-secondary-btn" id="modalBackMapBtn" onclick="closeRoundModalAndMap()">🗺️ 返回地图</button>
+        <button type="button" class="modal-secondary-btn" id="modalBackHomeBtn" onclick="closeRoundModalAndHome()">🏠 返回首页</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 2: PARENT VERIFICATION GATE ================= -->
+  <div class="modal-backdrop" id="parentGateModal">
+    <div class="modal-card">
+      <h3 class="modal-title">🔒 家长专区验证</h3>
+      <p class="modal-desc" id="parentGatePrompt">请回答下面的乘法题进入家长设置：3 × 4 = ?</p>
+      <div class="modal-btn-row" id="parentGateChoices"></div>
+      <button type="button" class="modal-secondary-btn" id="closeParentGateBtn" onclick="closeParentGate()">取消返回</button>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 3: RESET CONFIRMATION MODAL ================= -->
+  <div class="modal-backdrop" id="resetConfirmModal">
+    <div class="modal-card">
+      <h3 class="modal-title" style="color:#E03131;">⚠️ 确认重置学习记录？</h3>
+      <p class="modal-desc">确定要清空所有星星、奖杯、贴纸、装扮和学习记录吗？清空后将恢复到初始状态哦。</p>
+      <div class="modal-btn-row">
+        <button type="button" class="danger-reset-btn" id="confirmResetYesBtn" onclick="confirmResetProgress()" style="background:#E03131;color:#FFFFFF;border:none;padding:11px 22px;">确认重置</button>
+        <button type="button" class="modal-secondary-btn" id="confirmResetNoBtn" onclick="closeResetConfirmModal()">保留数据</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MODAL 4: MYSTERY GIFT REWARD MODAL ================= -->
+  <div class="modal-backdrop" id="giftRewardModal">
+    <div class="modal-card">
+      <div style="font-size:3.8rem;" id="giftRewardIcon">🎁</div>
+      <h3 class="modal-title" id="giftRewardTitle">惊喜神秘礼物！</h3>
+      <p class="modal-desc" id="giftRewardDesc">恭喜你获得了神秘奖励！</p>
+      <button type="button" class="modal-primary-btn" id="closeGiftModalBtn" onclick="closeGiftModal()">太开心啦！</button>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================================
+       1. DATA-DRIVEN 6 WORLDS & 30 DAILY ADVENTURE MAPS CONFIGURATION
+       -------------------------------------------------------------------------
+       HOW TO EDIT OR ADD NEW MAPS:
+       Each entry in ADVENTURE_MAPS defines:
+       - level: Map number (1..30)
+       - worldId: Which of the 6 worlds ('candy', 'jungle', 'ocean', 'space', 'dino', 'castle')
+       - name: Chinese title shown on the map card
+       - desc: Short skill description
+       - icon: Emoji icon for the map node
+       - isBoss: true on every 5th map (enables Boss HP bar battle!)
+       - bossName / bossEmoji: Boss identity for boss maps
+       - questionCount: 8 to 10 questions per map
+       - minVal / maxVal: Number range cap
+       - skills: Array of question generator skill types for easy->medium->hard ramp
+       - miniGame: Primary interactive mini-game ('drag_count', 'number_line', 'balance_scale',
+                   'feed_animal', 'balloon_pop', 'match_pairs', 'build_tiles')
+       - speedTimer: true ONLY on gentle speed-round maps (Maps 26, 28, 30)
+       - story: 1-2 line Chinese quest story spoken aloud by the mascot at map start
+       - stickerReward: Collectible sticker unlocked when passing the map with >= 2 stars
+       ========================================================================= */
+    const STORAGE_KEY = 'kawaii_chinese_math_wonderland_v2';
+
+    const ADVENTURE_WORLDS = [
+      { id: 'candy', num: 1, name: '糖果乐园', icon: '🍬', mascot: 'bunny', themeClass: 'world-theme-candy', desc: '第1–5关：5以内数数与看图加减法', rewardNote: '通关世界解锁：棉花糖皇冠贴纸' },
+      { id: 'jungle', num: 2, name: '奇幻丛林', icon: '🌴', mascot: 'panda', themeClass: 'world-theme-jungle', desc: '第6–10关：10以内加减与数字分解组合', rewardNote: '通关世界解锁：丛林探险家贴纸' },
+      { id: 'ocean', num: 3, name: '蔚蓝海洋', icon: '🐬', mascot: 'kitten', themeClass: 'world-theme-ocean', desc: '第11–15关：填空算式、比大小与趣味应用题', rewardNote: '通关世界解锁：深海人鱼贴纸' },
+      { id: 'space', num: 4, name: '星际太空', icon: '🚀', mascot: 'chick', themeClass: 'world-theme-space', desc: '第16–20关：20以内凑十法、双数加法与数轴', rewardNote: '通关世界解锁：星际宇航员贴纸' },
+      { id: 'dino', num: 5, name: '恐龙山谷', icon: '🦕', mascot: 'bunny', themeClass: 'world-theme-dino', desc: '第21–25关：20以内连加连减、找规律与进阶应用题', rewardNote: '通关世界解锁：霸王龙勇者贴纸' },
+      { id: 'castle', num: 6, name: '彩虹城堡', icon: '🏰', mascot: 'kitten', themeClass: 'world-theme-castle', desc: '第26–30关：彩虹沙漏挑战、综合复习与终极魔王', rewardNote: '通关世界解锁：彩虹大满贯金冠贴纸' }
+    ];
+
+    const ADVENTURE_MAPS = [
+      // ---------------- WORLD 1: CANDY LAND (Maps 1-5, Within 5) ----------------
+      { level: 1, worldId: 'candy', name: '第1关：草莓果园', desc: '5以内看图数数', icon: '🍓', isBoss: false, questionCount: 8, minVal: 1, maxVal: 5, skills: ['counting', 'add_pic'], miniGame: 'drag_count', speedTimer: false, story: '欢迎来到糖果乐园！请帮团团兔把甜甜的草莓装进果篮里数一数吧！', stickerReward: { id: 'stk_1', name: '甜心草莓贴纸', icon: '🍓' } },
+      { level: 2, worldId: 'candy', name: '第2关：棒棒糖小路', desc: '5以内看图加法', icon: '🍭', isBoss: false, questionCount: 8, minVal: 1, maxVal: 5, skills: ['add_pic', 'addition'], miniGame: 'feed_animal', speedTimer: false, story: '棒棒糖小路上飘来阵阵甜香，算对加法就能喂饱贪吃的小馋猫哦！', stickerReward: { id: 'stk_2', name: '彩虹棒棒糖贴纸', icon: '🍭' } },
+      { level: 3, worldId: 'candy', name: '第3关：跳跳糖草地', desc: '5以内看图减法', icon: '🐰', isBoss: false, questionCount: 8, minVal: 1, maxVal: 5, skills: ['subtraction', 'add_pic'], miniGame: 'balloon_pop', speedTimer: false, story: '小兔子拿着气球跳走啦！快数一数还剩几个，戳破正确的气球吧！', stickerReward: { id: 'stk_3', name: '缤纷气球贴纸', icon: '🎈' } },
+      { level: 4, worldId: 'candy', name: '第4关：曲奇饼干屋', desc: '0到5加减混合', icon: '🍪', isBoss: false, questionCount: 8, minVal: 0, maxVal: 5, skills: ['addition', 'subtraction', 'match_pairs'], miniGame: 'match_pairs', speedTimer: false, story: '曲奇饼干屋的门锁需要配对算式才能打开，快来翻牌配对吧！', stickerReward: { id: 'stk_4', name: '香脆曲奇贴纸', icon: '🍪' } },
+      { level: 5, worldId: 'candy', name: '第5关：棉花糖魔王', desc: 'BOSS战：5以内综合', icon: '☁️', isBoss: true, bossName: '棉花糖大魔王', bossEmoji: '☁️🍭', questionCount: 9, minVal: 0, maxVal: 5, skills: ['counting', 'addition', 'subtraction'], miniGame: 'build_tiles', speedTimer: false, story: '软乎乎的棉花糖大魔王挡住了去路！用正确的算式发射星星光线击败它吧！', stickerReward: { id: 'stk_5', name: '糖果乐园金章', icon: '👑' } },
+
+      // ---------------- WORLD 2: JUNGLE (Maps 6-10, Within 10 & Number Bonds) ----------------
+      { level: 6, worldId: 'jungle', name: '第6关：翠竹小溪', desc: '10以内趣味加法', icon: '🎋', isBoss: false, questionCount: 8, minVal: 2, maxVal: 10, skills: ['addition', 'add_pic'], miniGame: 'drag_count', speedTimer: false, story: '进入奇幻丛林啦！帮圆圆熊收集嫩绿的竹笋，算一算一共有多少根！', stickerReward: { id: 'stk_6', name: '翠竹熊猫贴纸', icon: '🐼' } },
+      { level: 7, worldId: 'jungle', name: '第7关：猴子秋千林', desc: '10以内趣味减法', icon: '🐒', isBoss: false, questionCount: 8, minVal: 2, maxVal: 10, skills: ['subtraction'], miniGame: 'number_line', speedTimer: false, story: '小猴子在树枝数轴上荡秋千，跟着它一起跳到正确的数字上吧！', stickerReward: { id: 'stk_7', name: '顽皮小猴贴纸', icon: '🐒' } },
+      { level: 8, worldId: 'jungle', name: '第8关：蘑菇分解屋', desc: '数字分解与组合(10以内)', icon: '🍄', isBoss: false, questionCount: 8, minVal: 4, maxVal: 10, skills: ['number_bonds', 'addition'], miniGame: 'build_tiles', speedTimer: false, story: '神奇蘑菇会把一个数字分成两部分，你能找出缺少的数字朋友吗？', stickerReward: { id: 'stk_8', name: '魔法红菇贴纸', icon: '🍄' } },
+      { level: 9, worldId: 'jungle', name: '第9关：鹦鹉合唱团', desc: '10以内加减配对', icon: '🦜', isBoss: false, questionCount: 9, minVal: 3, maxVal: 10, skills: ['addition', 'subtraction', 'number_bonds'], miniGame: 'match_pairs', speedTimer: false, story: '彩色鹦鹉们在唱算术歌，把相等的算式和答案配成一对吧！', stickerReward: { id: 'stk_9', name: '七彩鹦鹉贴纸', icon: '🦜' } },
+      { level: 10, worldId: 'jungle', name: '第10关：丛林藤蔓王', desc: 'BOSS战：10以内与分解', icon: '🌿', isBoss: true, bossName: '丛林藤蔓巨兽', bossEmoji: '🦖🌿', questionCount: 10, minVal: 2, maxVal: 10, skills: ['addition', 'subtraction', 'number_bonds'], miniGame: 'balloon_pop', speedTimer: false, story: '丛林藤蔓巨兽出现了！快戳破带有正确答案的魔法果子打败它！', stickerReward: { id: 'stk_10', name: '丛林探险勋章', icon: '🏅' } },
+
+      // ---------------- WORLD 3: OCEAN (Maps 11-15, Missing Num, Compare, Word Problems) ----------------
+      { level: 11, worldId: 'ocean', name: '第11关：贝壳珊瑚礁', desc: '10以内填空算式(3+?=8)', icon: '🐚', isBoss: false, questionCount: 8, minVal: 3, maxVal: 10, skills: ['missing_num', 'addition'], miniGame: 'build_tiles', speedTimer: false, story: '欢迎潜入蔚蓝海洋！小贝壳藏起了算式里的一个数字，快把它找出来吧！', stickerReward: { id: 'stk_11', name: '闪亮珍珠贝贴纸', icon: '🐚' } },
+      { level: 12, worldId: 'ocean', name: '第12关：海豚翘翘板', desc: '算式比大小(>, <, =)', icon: '🐬', isBoss: false, questionCount: 8, minVal: 1, maxVal: 10, skills: ['compare'], miniGame: 'balance_scale', speedTimer: false, story: '小海豚正在玩海洋天平翘翘板，比一比两边谁大谁小还是相等吧！', stickerReward: { id: 'stk_12', name: '微笑海豚贴纸', icon: '🐬' } },
+      { level: 13, worldId: 'ocean', name: '第13关：海龟故事岛', desc: '10以内一句话应用题', icon: '🐢', isBoss: false, questionCount: 8, minVal: 2, maxVal: 10, skills: ['word_problem_10', 'addition', 'subtraction'], miniGame: 'feed_animal', speedTimer: false, story: '慢吞吞的老海龟带来了有趣的海洋数学小故事，仔细听题选出答案吧！', stickerReward: { id: 'stk_13', name: '智慧海龟贴纸', icon: '🐢' } },
+      { level: 14, worldId: 'ocean', name: '第14关：水母泡泡阵', desc: '填空与比大小混合', icon: '🪼', isBoss: false, questionCount: 9, minVal: 2, maxVal: 10, skills: ['missing_num', 'compare', 'word_problem_10'], miniGame: 'balloon_pop', speedTimer: false, story: '发光小水母吐出了许多彩色泡泡，拍破正确的泡泡就能照亮海底！', stickerReward: { id: 'stk_14', name: '梦幻水母贴纸', icon: '🪼' } },
+      { level: 15, worldId: 'ocean', name: '第15关：深海大章鱼', desc: 'BOSS战：海洋综合大考验', icon: '🐙', isBoss: true, bossName: '深海大章鱼王', bossEmoji: '🐙🌊', questionCount: 10, minVal: 2, maxVal: 10, skills: ['missing_num', 'compare', 'word_problem_10'], miniGame: 'balance_scale', speedTimer: false, story: '八爪大章鱼王挥舞着触手！用你学到的填空、比大小和应用题本领战胜它吧！', stickerReward: { id: 'stk_15', name: '海洋之星金章', icon: '🔱' } },
+
+      // ---------------- WORLD 4: SPACE (Maps 16-20, Within 20, Make 10, Doubles, Number Line) ----------------
+      { level: 16, worldId: 'space', name: '第16关：双子星基地', desc: '双数巧算(6+6, 7+7)', icon: '♊', isBoss: false, questionCount: 8, minVal: 4, maxVal: 20, skills: ['doubles', 'addition'], miniGame: 'match_pairs', speedTimer: false, story: '啾啾鸡穿上宇航服飞向太空啦！双子星最喜欢两个一模一样的数字相加！', stickerReward: { id: 'stk_16', name: '双子星火箭贴纸', icon: '🚀' } },
+      { level: 17, worldId: 'space', name: '第17关：凑十能量站', desc: '20以内凑十法(8+5)', icon: '⚡', isBoss: false, questionCount: 8, minVal: 11, maxVal: 18, skills: ['make_10'], miniGame: 'build_tiles', speedTimer: false, story: '凑十能量站的秘诀是：先把一个数凑成10，再加上剩下的数，算得超级快！', stickerReward: { id: 'stk_17', name: '满电能量星贴纸', icon: '⚡' } },
+      { level: 18, worldId: 'space', name: '第18关：星环数轴桥', desc: '20以内数轴加减跳跃', icon: '🪐', isBoss: false, questionCount: 8, minVal: 8, maxVal: 20, skills: ['number_line_20', 'addition', 'subtraction'], miniGame: 'number_line', speedTimer: false, story: '沿着土星光环上的20格数轴一步步跳跃，找到正确的星球坐标吧！', stickerReward: { id: 'stk_18', name: '土星光环贴纸', icon: '🪐' } },
+      { level: 19, worldId: 'space', name: '第19关：月球陨石坑', desc: '20以内退位减法入门', icon: '🌙', isBoss: false, questionCount: 9, minVal: 11, maxVal: 20, skills: ['subtraction', 'make_10', 'doubles'], miniGame: 'feed_animal', speedTimer: false, story: '月球上的小外星人肚子饿啦，帮它算出20以内的加减法喂它吃太空饼干吧！', stickerReward: { id: 'stk_19', name: '弯弯月牙贴纸', icon: '🌙' } },
+      { level: 20, worldId: 'space', name: '第20关：星际机甲王', desc: 'BOSS战：20以内巧算王', icon: '🛸', isBoss: true, bossName: '外星陨石机甲', bossEmoji: '🛸👾', questionCount: 10, minVal: 10, maxVal: 20, skills: ['make_10', 'doubles', 'number_line_20', 'subtraction'], miniGame: 'balloon_pop', speedTimer: false, story: '外星陨石机甲启动了防护罩！快用凑十法和双数巧算发射激光击破它！', stickerReward: { id: 'stk_20', name: '银河宇航员勋章', icon: '👨‍🚀' } },
+
+      // ---------------- WORLD 5: DINO VALLEY (Maps 21-25, 3-Number, Patterns, Harder Word Problems) ----------------
+      { level: 21, worldId: 'dino', name: '第21关：三角龙草甸', desc: '三个数连加(4+3+2)', icon: '🦕', isBoss: false, questionCount: 8, minVal: 5, maxVal: 18, skills: ['three_num', 'addition'], miniGame: 'build_tiles', speedTimer: false, story: '来到恐龙山谷啦！三只小三角龙一起找果子，把三个数字加起来算一算吧！', stickerReward: { id: 'stk_21', name: '温顺三角龙贴纸', icon: '🦕' } },
+      { level: 22, worldId: 'dino', name: '第22关：翼龙火山口', desc: '连减与加减混合(9-3+2)', icon: '🌋', isBoss: false, questionCount: 8, minVal: 4, maxVal: 18, skills: ['three_num', 'subtraction'], miniGame: 'number_line', speedTimer: false, story: '小翼龙飞过火山口，先算前两个数，再算第三个数，稳稳降落吧！', stickerReward: { id: 'stk_22', name: '神气小翼龙贴纸', icon: '🦅' } },
+      { level: 23, worldId: 'dino', name: '第23关：恐龙脚印迷宫', desc: '找规律与跳数(2,4,6,?)', icon: '🐾', isBoss: false, questionCount: 8, minVal: 2, maxVal: 20, skills: ['pattern'], miniGame: 'build_tiles', speedTimer: false, story: '地上有一串神秘的恐龙脚印数字，仔细观察它们每次增加几，找出下一个数！', stickerReward: { id: 'stk_23', name: '神秘恐龙蛋贴纸', icon: '🥚' } },
+      { level: 24, worldId: 'dino', name: '第24关：远古森林营地', desc: '20以内进阶应用题', icon: '🏕️', isBoss: false, questionCount: 9, minVal: 8, maxVal: 20, skills: ['word_problem_20', 'three_num', 'pattern'], miniGame: 'feed_animal', speedTimer: false, story: '恐龙营地里发生了许多有趣的事，读一读题目，帮恐龙宝宝解决问题吧！', stickerReward: { id: 'stk_24', name: '恐龙脚印贴纸', icon: '🐾' } },
+      { level: 25, worldId: 'dino', name: '第25关：火焰霸王龙', desc: 'BOSS战：恐龙谷全能赛', icon: '🦖', isBoss: true, bossName: '火焰霸王龙王', bossEmoji: '🦖🔥', questionCount: 10, minVal: 6, maxVal: 20, skills: ['three_num', 'pattern', 'word_problem_20'], miniGame: 'balance_scale', speedTimer: false, story: '吼——！火焰霸王龙王震动了山谷！展现你连加连减和找规律的实力吧！', stickerReward: { id: 'stk_25', name: '恐龙山谷金杯贴纸', icon: '🏆' } },
+
+      // ---------------- WORLD 6: RAINBOW CASTLE (Maps 26-30, Speed Rounds, Review, Grand Boss) ----------------
+      { level: 26, worldId: 'castle', name: '第26关：彩虹云梯(速算)', desc: '10以内彩虹沙漏速算', icon: '🌈', isBoss: false, questionCount: 8, minVal: 2, maxVal: 10, skills: ['addition', 'subtraction', 'number_bonds'], miniGame: 'balloon_pop', speedTimer: true, story: '终于抵达彩虹城堡！伴随着温柔的彩虹沙漏，看看你能多快戳破正确气球吧！', stickerReward: { id: 'stk_26', name: '七彩云梯贴纸', icon: '🌈' } },
+      { level: 27, worldId: 'castle', name: '第27关：水晶天平大厅', desc: '20以内比大小与填空复习', icon: '💎', isBoss: false, questionCount: 9, minVal: 5, maxVal: 20, skills: ['compare', 'missing_num', 'make_10'], miniGame: 'balance_scale', speedTimer: false, story: '水晶大厅里的魔法天平闪闪发光，把20以内的算式平衡好就能前进！', stickerReward: { id: 'stk_27', name: '璀璨紫水晶贴纸', icon: '💎' } },
+      { level: 28, worldId: 'castle', name: '第28关：星光骑士团(速算)', desc: '20以内彩虹沙漏速算', icon: '🛡️', isBoss: false, questionCount: 9, minVal: 6, maxVal: 20, skills: ['make_10', 'doubles', 'three_num'], miniGame: 'match_pairs', speedTimer: true, story: '星光骑士团正在进行反应力训练，把所有算式卡片快速配对成功吧！', stickerReward: { id: 'stk_28', name: '皇家骑士盾贴纸', icon: '🛡️' } },
+      { level: 29, worldId: 'castle', name: '第29关：智慧图书馆', desc: '全技能综合应用大闯关', icon: '📚', isBoss: false, questionCount: 9, minVal: 5, maxVal: 20, skills: ['word_problem_20', 'pattern', 'three_num', 'missing_num'], miniGame: 'build_tiles', speedTimer: false, story: '城堡图书馆收藏着所有数学秘籍，通过这场综合考验就能见到最终魔王！', stickerReward: { id: 'stk_29', name: '黄金智慧书贴纸', icon: '📚' } },
+      { level: 30, worldId: 'castle', name: '第30关：终极彩虹大魔王', desc: 'GRAND BOSS：一年级总决赛', icon: '🐉', isBoss: true, bossName: '终极混沌数学魔王', bossEmoji: '🐉👑', questionCount: 10, minVal: 5, maxVal: 20, skills: ['make_10', 'three_num', 'word_problem_20', 'pattern', 'compare', 'missing_num'], miniGame: 'balloon_pop', speedTimer: true, story: '最终决战时刻！集合6大世界伙伴的力量，打败终极数学魔王，加冕彩虹数学小状元！', stickerReward: { id: 'stk_30', name: '一年级数学状元金冠', icon: '👑' } }
+    ];
+
+    // Alias CHALLENGE_LEVELS to ADVENTURE_MAPS for backwards compatibility
+    const CHALLENGE_LEVELS = ADVENTURE_MAPS;
+
+    const CHARACTERS = [
+      { id: 'bunny', name: '团团兔', cost: 0, icon: '🐰', greeting: '你好呀！我是团团兔，我们一起去糖果乐园和恐龙谷探险吧！' },
+      { id: 'kitten', name: '喵喵猫', cost: 6, icon: '🐱', greeting: '喵呜～我是喵喵猫，海洋世界和彩虹城堡超好玩哦！' },
+      { id: 'panda', name: '圆圆熊', cost: 12, icon: '🐼', greeting: '嗨！我是圆圆熊，奇幻丛林里的数字分解最有趣啦！' },
+      { id: 'chick', name: '啾啾鸡', cost: 18, icon: '🐥', greeting: '啾啾！我是太空宇航员啾啾鸡，凑十法算得像火箭一样快！' }
+    ];
+
+    const HATS = [
+      { id: 'none', name: '自然萌样', cost: 0, icon: '✨' },
+      { id: 'crown', name: '金色小皇冠', cost: 5, icon: '👑' },
+      { id: 'bow', name: '粉红蝴蝶结', cost: 8, icon: '🎀' },
+      { id: 'wizard', name: '魔法星星帽', cost: 12, icon: '🎩' },
+      { id: 'glasses', name: '博士小眼镜', cost: 15, icon: '👓' }
+    ];
+
+    const THEMES = [
+      { id: 'default', name: '晴空彩虹岛', cost: 0, icon: '🌈' },
+      { id: 'sakura', name: '樱花蜜桃园', cost: 10, icon: '🌸' },
+      { id: 'starry', name: '梦幻星空夜', cost: 16, icon: '🪐' }
+    ];
+
+    const TROPHIES = [
+      { id: 'first_win', name: '初露锋芒奖', desc: '完成第 1 次数学闯关', icon: '🥉' },
+      { id: 'add_master', name: '加法小达人', desc: '累计答对 10 道加法题', icon: '➕' },
+      { id: 'sub_master', name: '减法小能手', desc: '累计答对 10 道减法题', icon: '➖' },
+      { id: 'pic_detective', name: '看图小侦探', desc: '累计答对 10 道看图与巧算题', icon: '🔍' },
+      { id: 'perfect_round', name: '满分金奖杯', desc: '在一关中全部一次答对', icon: '🏆' },
+      { id: 'streak_5', name: '连对小超人', desc: '连续答对 5 道数学题', icon: '⚡' },
+      { id: 'star_collector', name: '摘星小王子/公主', desc: '累计收集满 25 颗星星', icon: '🌟' },
+      { id: 'island_hero', name: '冒险大勇士', desc: '成功通关 5 个以上冒险地图', icon: '👑' }
+    ];
+
+    const VISUAL_OBJECTS = [
+      { id: 'apple', name: '红苹果', unit: '个', emoji: '🍎' },
+      { id: 'bunny', name: '小兔子', unit: '只', emoji: '🐰' },
+      { id: 'candy', name: '甜糖果', unit: '颗', emoji: '🍬' },
+      { id: 'cat', name: '小猫咪', unit: '只', emoji: '🐱' },
+      { id: 'star', name: '小星星', unit: '颗', emoji: '⭐' },
+      { id: 'balloon', name: '彩气球', unit: '个', emoji: '🎈' },
+      { id: 'strawberry', name: '红草莓', unit: '颗', emoji: '🍓' },
+      { id: 'chick', name: '小黄鸡', unit: '只', emoji: '🐥' }
+    ];
+
+    const SKILL_META = {
+      counting: { name: '数数与看图', icon: '🍎' },
+      addition: { name: '加法运算', icon: '➕' },
+      subtraction: { name: '减法运算', icon: '➖' },
+      missing_bonds: { name: '数字分解与填空', icon: '🧩' },
+      word_compare: { name: '比大小、规律与应用题', icon: '⚖️' },
+      speed_strategy: { name: '凑十、连加与速算', icon: '⚡' }
+    };
+
+    const PRAISE_PHRASES = [
+      '太棒了！你算得又快又准！',
+      '真聪明！给你点一个大大的赞！',
+      '你真厉害！小脑袋转得真快！',
+      '答对啦！星星奖励送给你！',
+      '哇！你真是数学冒险小达人！'
+    ];
+
+    const RETRY_PHRASES = [
+      '再试一次！你可以的哦！',
+      '没关系，我们再来数一数！',
+      '别着急，看看小提示再来试一下吧！'
+    ];
+
+    /* =========================================================================
+       2. PERSISTENT STATE & DAILY PROGRESSION HELPERS
+       ========================================================================= */
+    function getTodayDateString() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + d;
+    }
+
+    function createDefaultState() {
+      const today = getTodayDateString();
+      return {
+        stars: 0,
+        totalStarsEarned: 0,
+        giftsOpened: 0,
+        equippedChar: 'bunny',
+        equippedHat: 'none',
+        equippedTheme: 'default',
+        unlockedChars: ['bunny'],
+        unlockedHats: ['none'],
+        unlockedThemes: ['default'],
+        trophies: [],
+        stickers: [],
+        // 30-Map Daily Adventure State
+        unlockedLevel: 1,         // Highest map unlocked (1..30)
+        selectedWorldNum: 1,      // Currently viewed world tab (1..6)
+        lastUnlockDate: today,    // Date when current daily map was unlocked
+        lastCompletedDate: '',    // Date when child last cleared a new daily map
+        dailyStreak: 1,           // Consecutive days played
+        completedDays: [],        // Array of 'YYYY-MM-DD' strings
+        levelStars: {},           // { 1: 3, 2: 2, ... }
+        mistakes: [],             // Saved mistake objects for warm-up review
+        settings: {
+          dailyLimitEnabled: true, // Parent toggle: ON = 1 new map per day, OFF = all maps unlocked
+          numberRange: 'auto',
+          roundLength: 5,
+          bgmEnabled: true,
+          sfxEnabled: true,
+          volume: 80
+        },
+        stats: {
+          totalCompleted: 0,
+          totalCorrect: 0,
+          currentStreak: 0,
+          bestStreak: 0,
+          additionTotal: 0,
+          additionCorrect: 0,
+          subtractionTotal: 0,
+          subtractionCorrect: 0,
+          pictureTotal: 0,
+          pictureCorrect: 0,
+          skillStats: {
+            counting: { total: 0, correct: 0 },
+            addition: { total: 0, correct: 0 },
+            subtraction: { total: 0, correct: 0 },
+            missing_bonds: { total: 0, correct: 0 },
+            word_compare: { total: 0, correct: 0 },
+            speed_strategy: { total: 0, correct: 0 }
+          }
+        }
+      };
+    }
+
+    let state = createDefaultState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('kawaii_chinese_math_wonderland_v1');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          const def = createDefaultState();
+          state = Object.assign({}, def, parsed);
+          state.settings = Object.assign({}, def.settings, parsed.settings || {});
+          state.stats = Object.assign({}, def.stats, parsed.stats || {});
+          state.stats.skillStats = Object.assign({}, def.stats.skillStats, (parsed.stats && parsed.stats.skillStats) || {});
+          state.levelStars = Object.assign({}, parsed.levelStars || {});
+          state.stickers = Array.isArray(parsed.stickers) ? parsed.stickers : [];
+          state.mistakes = Array.isArray(parsed.mistakes) ? parsed.mistakes : [];
+          state.completedDays = Array.isArray(parsed.completedDays) ? parsed.completedDays : [];
+        }
+      } catch (e) {
+        state = createDefaultState();
+      }
+      refreshDailyUnlockRollover();
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (e) {}
+    }
+
+    // Check if a new calendar day has arrived to unlock the next map if previous map passed (>=2 stars)
+    function refreshDailyUnlockRollover() {
+      const today = getTodayDateString();
+      if (state.lastUnlockDate !== today) {
+        const currentCleared = (state.levelStars[state.unlockedLevel] || 0) >= 2;
+        if (currentCleared && state.unlockedLevel < 30) {
+          state.unlockedLevel += 1;
+        }
+        state.lastUnlockDate = today;
+        saveState();
+      }
+    }
+
+    // Returns true if map `levelNum` can be played right now
+    function isMapPlayable(levelNum) {
+      if (!state.settings.dailyLimitEnabled) return true;
+      return levelNum <= state.unlockedLevel;
+    }
+
+    // Returns true if the child already passed today's newest map and must wait until tomorrow for the next
+    function isWaitingForTomorrow() {
+      if (!state.settings.dailyLimitEnabled) return false;
+      const today = getTodayDateString();
+      const clearedCurrent = (state.levelStars[state.unlockedLevel] || 0) >= 2;
+      return clearedCurrent && state.lastCompletedDate === today && state.unlockedLevel < 30;
+    }
+
+    /* =========================================================================
+       3. SVG CHARACTER & OBJECT ILLUSTRATIONS
+       ========================================================================= */
+    function renderMascotSVG(charId, hatId, mood) {
+      let eyesMarkup = '';
+      let mouthMarkup = '';
+      let rightArmTransform = 'rotate(0 124 95)';
+
+      if (mood === 'happy') {
+        eyesMarkup = `
+          <path d="M56 68 Q63 60 70 68" stroke="#3A3252" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M90 68 Q97 60 104 68" stroke="#3A3B52" stroke-width="4" stroke-linecap="round" fill="none"/>
+        `;
+        mouthMarkup = `<path d="M72 78 Q80 90 88 78 Z" fill="#FF5C8D" stroke="#3A3252" stroke-width="2.5"/>`;
+        rightArmTransform = 'rotate(-35 116 92)';
+      } else if (mood === 'encourage') {
+        eyesMarkup = `
+          <circle cx="63" cy="68" r="5.5" fill="#3A3252"/><circle cx="61" cy="66" r="2" fill="#FFFFFF"/>
+          <circle cx="97" cy="68" r="5.5" fill="#3A3252"/><circle cx="95" cy="66" r="2" fill="#FFFFFF"/>
+          <path d="M55 58 L69 61" stroke="#3A3252" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M105 58 L91 61" stroke="#3A3252" stroke-width="2.5" stroke-linecap="round"/>
+        `;
+        mouthMarkup = `<path d="M75 81 Q80 85 85 81" stroke="#3A3252" stroke-width="3" stroke-linecap="round" fill="none"/>`;
+      } else {
+        eyesMarkup = `
+          <circle cx="63" cy="68" r="5.5" fill="#3A3252"/><circle cx="61" cy="66" r="2" fill="#FFFFFF"/>
+          <circle cx="97" cy="68" r="5.5" fill="#3A3252"/><circle cx="95" cy="66" r="2" fill="#FFFFFF"/>
+        `;
+        mouthMarkup = `<path d="M73 78 Q80 86 87 78" stroke="#3A3252" stroke-width="3" stroke-linecap="round" fill="none"/>`;
+        rightArmTransform = 'rotate(-25 116 92)';
+      }
+
+      let bodyFill = '#FFFFFF';
+      let earMarkup = '';
+      let extraFeature = '';
+
+      if (charId === 'kitten') {
+        bodyFill = '#FFE8CC';
+        earMarkup = `
+          <polygon points="42,48 34,18 64,34" fill="#FFE8CC" stroke="#3A3252" stroke-width="3" stroke-linejoin="round"/>
+          <polygon points="44,44 39,24 58,34" fill="#FFA8C5"/>
+          <polygon points="118,48 126,18 96,34" fill="#FFE8CC" stroke="#3A3252" stroke-width="3" stroke-linejoin="round"/>
+          <polygon points="116,44 121,24 102,34" fill="#FFA8C5"/>
+        `;
+        extraFeature = `
+          <path d="M36 72 L48 74 M35 79 L48 79" stroke="#3A3252" stroke-width="2" stroke-linecap="round"/>
+          <path d="M124 72 L112 74 M125 79 L112 79" stroke="#3A3252" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="80" cy="99" r="5" fill="#FFD43B" stroke="#3A3252" stroke-width="2"/>
+        `;
+      } else if (charId === 'panda') {
+        bodyFill = '#FFFFFF';
+        earMarkup = `<circle cx="44" cy="32" r="14" fill="#3A3252"/><circle cx="116" cy="32" r="14" fill="#3A3252"/>`;
+        extraFeature = `
+          <ellipse cx="62" cy="68" rx="10" ry="8" fill="#3A3252" opacity="0.22"/>
+          <ellipse cx="98" cy="68" rx="10" ry="8" fill="#3A3252" opacity="0.22"/>
+          <ellipse cx="80" cy="73" rx="4" ry="3" fill="#3A3252"/>
+        `;
+      } else if (charId === 'chick') {
+        bodyFill = '#FFF3B0';
+        earMarkup = `
+          <path d="M80 28 Q72 12 62 18 Q72 24 80 28 Z" fill="#51CF66" stroke="#2B8A3E" stroke-width="2"/>
+          <path d="M80 28 Q88 10 96 18 Q88 24 80 28 Z" fill="#69DB7C" stroke="#2B8A3E" stroke-width="2"/>
+        `;
+        extraFeature = `<polygon points="75,73 85,73 80,81" fill="#FF922B"/>`;
+      } else {
+        bodyFill = '#FFFFFF';
+        earMarkup = `
+          <ellipse cx="58" cy="24" rx="11" ry="24" transform="rotate(-10 58 24)" fill="#FFFFFF" stroke="#3A3252" stroke-width="3"/>
+          <ellipse cx="58" cy="24" rx="6" ry="16" transform="rotate(-10 58 24)" fill="#FFB3C6"/>
+          <ellipse cx="102" cy="24" rx="11" ry="24" transform="rotate(10 102 24)" fill="#FFFFFF" stroke="#3A3252" stroke-width="3"/>
+          <ellipse cx="102" cy="24" rx="6" ry="16" transform="rotate(10 102 24)" fill="#FFB3C6"/>
+        `;
+      }
+
+      let hatMarkup = '';
+      if (hatId === 'crown') {
+        hatMarkup = `<polygon points="62,34 68,14 80,26 92,14 98,34" fill="#FFD43B" stroke="#E67700" stroke-width="2.5" stroke-linejoin="round"/>`;
+      } else if (hatId === 'bow') {
+        hatMarkup = `<g transform="translate(80, 32)"><polygon points="0,0 -16,-10 -16,10" fill="#FF5C8D" stroke="#3A3252" stroke-width="2"/><polygon points="0,0 16,-10 16,10" fill="#FF5C8D" stroke="#3A3252" stroke-width="2"/><circle cx="0" cy="0" r="5" fill="#FFE066" stroke="#3A3252" stroke-width="2"/></g>`;
+      } else if (hatId === 'wizard') {
+        hatMarkup = `<ellipse cx="80" cy="34" rx="26" ry="6" fill="#7950F2" stroke="#3A3252" stroke-width="2.5"/><polygon points="60,33 80,4 100,33" fill="#7950F2" stroke="#3A3252" stroke-width="2.5" stroke-linejoin="round"/><circle cx="80" cy="21" r="4" fill="#FFD43B"/>`;
+      } else if (hatId === 'glasses') {
+        hatMarkup = `<circle cx="63" cy="68" r="11" fill="none" stroke="#339AF0" stroke-width="3"/><circle cx="97" cy="68" r="11" fill="none" stroke="#339AF0" stroke-width="3"/><line x1="74" y1="68" x2="86" y2="68" stroke="#339AF0" stroke-width="3"/>`;
+      }
+
+      return `
+        <svg viewBox="0 0 160 150" width="100%" height="100%" fill="none">
+          ${earMarkup}
+          <ellipse cx="80" cy="112" rx="34" ry="26" fill="#FFD6E8" stroke="#3A3252" stroke-width="3"/>
+          <ellipse cx="44" cy="96" rx="11" ry="8" transform="rotate(20 44 96)" fill="${bodyFill}" stroke="#3A3252" stroke-width="3"/>
+          <ellipse cx="116" cy="92" rx="12" ry="8" transform="${rightArmTransform}" fill="${bodyFill}" stroke="#3A3252" stroke-width="3"/>
+          <ellipse cx="80" cy="68" rx="42" ry="35" fill="${bodyFill}" stroke="#3A3252" stroke-width="3"/>
+          <ellipse cx="50" cy="76" rx="7" ry="4.5" fill="#FF9EBB" opacity="0.8"/>
+          <ellipse cx="110" cy="76" rx="7" ry="4.5" fill="#FF9EBB" opacity="0.8"/>
+          ${eyesMarkup}
+          ${mouthMarkup}
+          ${extraFeature}
+          ${hatMarkup}
+        </svg>
+      `;
+    }
+
+    function renderObjectMiniSVG(typeId) {
+      switch (typeId) {
+        case 'apple':
+          return `<svg width="36" height="36" viewBox="0 0 48 48"><path d="M24 12 C14 12 8 20 10 32 C12 40 19 44 24 42 C29 44 36 40 38 32 C40 20 34 12 24 12 Z" fill="#FF5C77" stroke="#C92A2A" stroke-width="2.5"/><path d="M24 12 Q26 5 32 6 Q30 12 24 12 Z" fill="#51CF66"/></svg>`;
+        case 'bunny':
+          return `<svg width="36" height="36" viewBox="0 0 48 48"><ellipse cx="18" cy="12" rx="4" ry="9" fill="#FFFFFF" stroke="#4A3B75" stroke-width="2"/><ellipse cx="30" cy="12" rx="4" ry="9" fill="#FFFFFF" stroke="#4A3B75" stroke-width="2"/><circle cx="24" cy="28" r="13" fill="#FFFFFF" stroke="#4A3B75" stroke-width="2.5"/><circle cx="19" cy="26" r="2" fill="#4A3B75"/><circle cx="29" cy="26" r="2" fill="#4A3B75"/></svg>`;
+        case 'candy':
+          return `<svg width="36" height="36" viewBox="0 0 48 48"><polygon points="6,16 16,24 6,32" fill="#FF85B3" stroke="#C2255C" stroke-width="2"/><polygon points="42,16 32,24 42,32" fill="#FF85B3" stroke="#C2255C" stroke-width="2"/><circle cx="24" cy="24" r="11" fill="#FFD43B" stroke="#C2255C" stroke-width="2.5"/></svg>`;
+        case 'cat':
+          return `<svg width="36" height="36" viewBox="0 0 48 48"><polygon points="11,22 13,9 22,16" fill="#FFD8A8" stroke="#5C3C00" stroke-width="2"/><polygon points="37,22 35,9 26,16" fill="#FFD8A8" stroke="#5C3C00" stroke-width="2"/><circle cx="24" cy="27" r="13" fill="#FFE8CC" stroke="#5C3C00" stroke-width="2.5"/></svg>`;
+        case 'star':
+          return `<svg width="36" height="36" viewBox="0 0 48 48"><polygon points="24,5 29,17 42,18 32,27 35,40 24,33 13,40 16,27 6,18 19,17" fill="#FFE066" stroke="#E67700" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
+        case 'balloon':
+          return `<svg width="36" height="36" viewBox="0 0 48 48"><ellipse cx="24" cy="21" rx="12" ry="15" fill="#74C0FC" stroke="#1971C2" stroke-width="2.5"/><path d="M24 36 Q21 42 26 45" stroke="#1971C2" stroke-width="2" fill="none"/></svg>`;
+        case 'strawberry':
+          return `<svg width="36" height="36" viewBox="0 0 48 48"><path d="M24 40 C13 36 10 22 15 15 C19 11 29 11 33 15 C38 22 35 36 24 40 Z" fill="#FF6B8B" stroke="#C92A2A" stroke-width="2.5"/><path d="M16 14 L24 9 L32 14 L24 17 Z" fill="#51CF66"/></svg>`;
+        default:
+          return `<svg width="36" height="36" viewBox="0 0 48 48"><circle cx="24" cy="26" r="13" fill="#FFF3B0" stroke="#E67700" stroke-width="2.5"/><polygon points="21,26 27,26 24,31" fill="#FF922B"/></svg>`;
+      }
+    }
+
+    /* =========================================================================
+       4. WEB AUDIO API SYNTHESIZER & MANDARIN TTS (zh-CN)
+       ========================================================================= */
+    let audioCtx = null;
+    let bgmTimer = null;
+    let bgmStep = 0;
+
+    const BGM_MELODY = [
+      523.25, 659.25, 783.99, 659.25,
+      880.00, 783.99, 659.25, 587.33,
+      523.25, 587.33, 659.25, 783.99,
+      659.25, 587.33, 523.25, 0
+    ];
+
+    function ensureAudioContext() {
+      try {
+        if (!audioCtx) {
+          const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+          if (AudioContextClass) audioCtx = new AudioContextClass();
+        }
+        if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+      } catch (e) {}
+    }
+
+    function getMasterGain() {
+      return Math.max(0, Math.min(1, (state.settings.volume || 80) / 100));
+    }
+
+    function playTone(freq, duration, type, gainScale, delaySec) {
+      if (!state.settings.sfxEnabled) return;
+      ensureAudioContext();
+      if (!audioCtx || !freq) return;
+      try {
+        const now = audioCtx.currentTime + (delaySec || 0);
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type || 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        const peak = 0.16 * (gainScale || 1) * getMasterGain();
+        gain.gain.setValueAtTime(0.001, now);
+        gain.gain.linearRampToValueAtTime(peak, now + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0008, now + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now);
+        osc.stop(now + duration + 0.02);
+      } catch (e) {}
+    }
+
+    function playButtonPop() {
+      playTone(587.33, 0.09, 'sine', 0.8, 0);
+      playTone(783.99, 0.09, 'triangle', 0.6, 0.04);
+    }
+
+    function playCountNote(index) {
+      const scale = [523.25, 587.33, 659.25, 698.46, 783.99, 880.0, 987.77, 1046.5];
+      playTone(scale[index % scale.length], 0.16, 'triangle', 0.9, 0);
+    }
+
+    function playSuccessSound() {
+      playTone(523.25, 0.14, 'triangle', 1.0, 0);
+      playTone(659.25, 0.14, 'triangle', 1.0, 0.10);
+      playTone(783.99, 0.16, 'triangle', 1.0, 0.20);
+      playTone(1046.5, 0.34, 'sine', 1.1, 0.30);
+    }
+
+    function playGentleRetrySound() {
+      playTone(440.0, 0.18, 'sine', 0.7, 0);
+      playTone(392.0, 0.24, 'sine', 0.7, 0.15);
+    }
+
+    function playFanfareSound() {
+      const notes = [523.25, 659.25, 783.99, 1046.5, 783.99, 1046.5];
+      const times = [0, 0.12, 0.24, 0.36, 0.52, 0.66];
+      for (let i = 0; i < notes.length; i++) {
+        playTone(notes[i], 0.22, 'triangle', 1.1, times[i]);
+      }
+    }
+
+    function startBgmLoop() {
+      stopBgmLoop();
+      if (!state.settings.bgmEnabled) return;
+      bgmTimer = setInterval(function () {
+        if (!state.settings.bgmEnabled || !audioCtx || audioCtx.state !== 'running') return;
+        const freq = BGM_MELODY[bgmStep % BGM_MELODY.length];
+        bgmStep++;
+        if (freq > 0) {
+          try {
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+            const peak = 0.035 * getMasterGain();
+            gain.gain.setValueAtTime(0.0005, now);
+            gain.gain.linearRampToValueAtTime(peak, now + 0.04);
+            gain.gain.exponentialRampToValueAtTime(0.0005, now + 0.38);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(now);
+            osc.stop(now + 0.42);
+          } catch (e) {}
+        }
+      }, 480);
+    }
+
+    function stopBgmLoop() {
+      if (bgmTimer) {
+        clearInterval(bgmTimer);
+        bgmTimer = null;
+      }
+    }
+
+    function speakChinese(text) {
+      if (!state.settings.sfxEnabled) return;
+      if (!('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = 'zh-CN';
+        utter.rate = 0.96;
+        utter.pitch = 1.12;
+        utter.volume = getMasterGain();
+        const voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+        for (let i = 0; i < voices.length; i++) {
+          if (voices[i].lang && voices[i].lang.indexOf('zh') !== -1) {
+            utter.voice = voices[i];
+            break;
+          }
+        }
+        window.speechSynthesis.speak(utter);
+      } catch (e) {}
+    }
+
+    function toggleBgm() {
+      ensureAudioContext();
+      state.settings.bgmEnabled = !state.settings.bgmEnabled;
+      saveState();
+      if (state.settings.bgmEnabled) startBgmLoop();
+      else stopBgmLoop();
+      syncTopBarAndSettingsUI();
+    }
+
+    function toggleSfx() {
+      ensureAudioContext();
+      state.settings.sfxEnabled = !state.settings.sfxEnabled;
+      saveState();
+      if (state.settings.sfxEnabled) playButtonPop();
+      else if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
+      syncTopBarAndSettingsUI();
+    }
+
+    function updateVolume(val) {
+      state.settings.volume = parseInt(val, 10) || 0;
+      const label = document.getElementById('volumePercentText');
+      if (label) label.textContent = state.settings.volume + '%';
+      saveState();
+    }
+
+    function toggleFullscreen() {
+      playButtonPop();
+      try {
+        if (!document.fullscreenElement) {
+          if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen().catch(function () {});
+          }
+        } else if (document.exitFullscreen) {
+          document.exitFullscreen().catch(function () {});
+        }
+      } catch (e) {}
+    }
+
+    /* =========================================================================
+       5. CONFETTI & STAR BURST CANVAS ENGINE
+       ========================================================================= */
+    let particles = [];
+    let animFrameId = null;
+
+    function launchStarBurst() {
+      const canvas = document.getElementById('fxCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#FF85B3', '#FFD43B', '#74C0FC', '#B197FC', '#69DB7C', '#FFA94D'];
+      for (let i = 0; i < 40; i++) {
+        const angle = (Math.PI * 2 * i) / 40 + (Math.random() - 0.5) * 0.3;
+        const speed = 4 + Math.random() * 7;
+        particles.push({
+          x: canvas.width / 2,
+          y: canvas.height * 0.42,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 3,
+          size: 7 + Math.random() * 7,
+          color: colors[i % colors.length],
+          alpha: 1
+        });
+      }
+
+      if (!animFrameId) {
+        const step = function () {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.22;
+            p.alpha -= 0.02;
+            if (p.alpha <= 0) {
+              particles.splice(i, 1);
+              continue;
+            }
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillStyle = p.color;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size * 0.55, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+          }
+          if (particles.length > 0) {
+            animFrameId = requestAnimationFrame(step);
+          } else {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            animFrameId = null;
+          }
+        };
+        animFrameId = requestAnimationFrame(step);
+      }
+    }
+
+    /* =========================================================================
+       6. SCREEN NAVIGATION & HOME SCREEN INTERACTIONS
+       ========================================================================= */
+    let currentScreen = 'home';
+
+    function navigateScreen(screenName) {
+      ensureAudioContext();
+      playButtonPop();
+      stopGentleSpeedTimer();
+      if (state.settings.bgmEnabled && !bgmTimer) startBgmLoop();
+      currentScreen = screenName;
+
+      const screens = document.querySelectorAll('.screen');
+      for (let i = 0; i < screens.length; i++) {
+        screens[i].classList.remove('active');
+      }
+      const target = document.getElementById('screen-' + screenName);
+      if (target) target.classList.add('active');
+
+      applyWorldTheme(null);
+      if (screenName === 'home') {
+        renderHomeMascot('wave');
+        updateHomeAdventureBanner();
+      } else if (screenName === 'challenges') {
+        renderChallengesGrid();
+      } else if (screenName === 'rewards') {
+        renderRewardsScreen();
+      } else if (screenName === 'records') {
+        renderKidRecordsScreen();
+      } else if (screenName === 'parent') {
+        renderParentScreen();
+      }
+      syncTopBarAndSettingsUI();
+    }
+
+    function updateHomeAdventureBanner() {
+      const mapObj = ADVENTURE_MAPS[Math.min(29, state.unlockedLevel - 1)];
+      const worldObj = ADVENTURE_WORLDS.find(function (w) { return w.id === mapObj.worldId; }) || ADVENTURE_WORLDS[0];
+      const badgeEl = document.getElementById('homeTodayMapBadge');
+      const subEl = document.getElementById('homeDailyStatusSub');
+      const warmupBtn = document.getElementById('btnDailyWarmup');
+
+      if (badgeEl) {
+        badgeEl.textContent = worldObj.icon + ' 今日冒险：' + mapObj.name + '（' + worldObj.name + '）';
+      }
+      if (subEl) {
+        if (isWaitingForTomorrow()) {
+          subEl.textContent = '🎉 今日新冒险已通关！明天再来解锁下一关，今天可以玩【练习模式】或【每日热身】哦！';
+        } else {
+          subEl.textContent = mapObj.story;
+        }
+      }
+      if (warmupBtn) {
+        const mCount = state.mistakes.length;
+        warmupBtn.textContent = mCount > 0 ? '🌅 错题热身 (' + Math.min(3, mCount) + '题待复习)' : '🌅 每日热身 (3题)';
+      }
+    }
+
+    function renderHomeMascot(mood) {
+      const charObj = CHARACTERS.find(function (c) { return c.id === state.equippedChar; }) || CHARACTERS[0];
+      const svgBox = document.getElementById('homeMascotSvg');
+      const nameTag = document.getElementById('homeMascotName');
+      if (svgBox) svgBox.innerHTML = renderMascotSVG(state.equippedChar, state.equippedHat, mood || 'wave');
+      if (nameTag) nameTag.textContent = charObj.name;
+    }
+
+    function interactWithMascot() {
+      ensureAudioContext();
+      playSuccessSound();
+      const charObj = CHARACTERS.find(function (c) { return c.id === state.equippedChar; }) || CHARACTERS[0];
+      const speechEl = document.getElementById('homeSpeechText');
+      if (speechEl) speechEl.textContent = charObj.greeting;
+      renderHomeMascot('happy');
+      speakChinese(charObj.greeting);
+      setTimeout(function () { renderHomeMascot('wave'); }, 1500);
+    }
+
+    function speakGreeting() {
+      ensureAudioContext();
+      playButtonPop();
+      const speechEl = document.getElementById('homeSpeechText');
+      speakChinese(speechEl ? speechEl.textContent : '欢迎来到数学乐园！今天也要加油哦！');
+    }
+
+    function handleStartLearningButton() {
+      ensureAudioContext();
+      playSuccessSound();
+      if (state.settings.bgmEnabled && !bgmTimer) startBgmLoop();
+      // Launch today's current unlocked adventure map directly!
+      startAdventureMap(state.unlockedLevel);
+    }
+
+    /* =========================================================================
+       7. DATA-DRIVEN QUESTION GENERATOR & SMART LEARNING ENGINE
+       ========================================================================= */
+    let activeRound = {
+      mode: 'addition',       // 'adventure', 'warmup', 'addition', 'subtraction', 'picture', 'random'
+      levelNum: null,         // 1..30 when playing an adventure map
+      isPracticeReplay: false,// true when replaying an already-cleared map
+      mapConfig: null,
+      questionIndex: 0,
+      totalQuestions: 8,
+      correctInRound: 0,
+      firstTryCorrectInRound: 0,
+      starsEarnedInRound: 0,
+      bossHp: 100,
+      askedKeys: [],
+      mistakeRetryQueue: [],  // Wrong questions re-queued at the end of the same map
+      inMistakeReviewPhase: false,
+      currentQuestion: null,
+      attemptsOnCurrent: 0,
+      answeredCurrent: false
+    };
+
+    let gentleSpeedInterval = null;
+    let gentleSpeedRemaining = 100;
+
+    function startAdventureMap(levelNum) {
+      ensureAudioContext();
+      refreshDailyUnlockRollover();
+      const mapCfg = ADVENTURE_MAPS.find(function (m) { return m.level === levelNum; }) || ADVENTURE_MAPS[0];
+
+      if (!isMapPlayable(levelNum)) {
+        playGentleRetrySound();
+        speakChinese('这一关明天才会解锁哦！今天先复习已经通关的岛屿吧！');
+        return;
+      }
+
+      const alreadyCleared = (state.levelStars[levelNum] || 0) >= 2;
+      activeRound = {
+        mode: 'adventure',
+        levelNum: levelNum,
+        isPracticeReplay: alreadyCleared,
+        mapConfig: mapCfg,
+        questionIndex: 0,
+        totalQuestions: mapCfg.questionCount || 8,
+        correctInRound: 0,
+        firstTryCorrectInRound: 0,
+        starsEarnedInRound: 0,
+        bossHp: 100,
+        askedKeys: [],
+        mistakeRetryQueue: [],
+        inMistakeReviewPhase: false,
+        currentQuestion: null,
+        attemptsOnCurrent: 0,
+        answeredCurrent: false
+      };
+
+      const worldObj = ADVENTURE_WORLDS.find(function (w) { return w.id === mapCfg.worldId; });
+      navigateScreen('play');
+      if (worldObj) applyWorldTheme(worldObj.themeClass);
+      speakChinese(mapCfg.story);
+      loadNextQuestionInRound();
+    }
+
+    function startWarmupReview() {
+      ensureAudioContext();
+      playButtonPop();
+      activeRound = {
+        mode: 'warmup',
+        levelNum: null,
+        isPracticeReplay: false,
+        mapConfig: {
+          name: '🌅 每日热身复习',
+          story: '温故而知新！把之前做错的或重点题目复习 3 道，赢取额外星星吧！',
+          miniGame: 'build_tiles',
+          isBoss: false,
+          speedTimer: false
+        },
+        questionIndex: 0,
+        totalQuestions: 3,
+        correctInRound: 0,
+        firstTryCorrectInRound: 0,
+        starsEarnedInRound: 0,
+        bossHp: 100,
+        askedKeys: [],
+        mistakeRetryQueue: [],
+        inMistakeReviewPhase: false,
+        currentQuestion: null,
+        attemptsOnCurrent: 0,
+        answeredCurrent: false
+      };
+      navigateScreen('play');
+      speakChinese('欢迎来到每日热身三题！我们一起来巩固一下吧！');
+      loadNextQuestionInRound();
+    }
+
+    function startLearningMode(mode, levelNum, maxNumOverride) {
+      if (levelNum) {
+        startAdventureMap(levelNum);
+        return;
+      }
+      ensureAudioContext();
+      playButtonPop();
+      if (state.settings.bgmEnabled && !bgmTimer) startBgmLoop();
+
+      activeRound = {
+        mode: mode,
+        levelNum: null,
+        isPracticeReplay: false,
+        mapConfig: null,
+        maxNumOverride: maxNumOverride || null,
+        questionIndex: 0,
+        totalQuestions: state.settings.roundLength || 5,
+        correctInRound: 0,
+        firstTryCorrectInRound: 0,
+        starsEarnedInRound: 0,
+        bossHp: 100,
+        askedKeys: [],
+        mistakeRetryQueue: [],
+        inMistakeReviewPhase: false,
+        currentQuestion: null,
+        attemptsOnCurrent: 0,
+        answeredCurrent: false
+      };
+
+      navigateScreen('play');
+      loadNextQuestionInRound();
+    }
+
+    function setRoundLength(len) {
+      playButtonPop();
+      state.settings.roundLength = len === 10 ? 10 : 5;
+      saveState();
+      syncTopBarAndSettingsUI();
+      if (currentScreen === 'play' && !activeRound.levelNum && activeRound.mode !== 'warmup' && activeRound.questionIndex === 0) {
+        activeRound.totalQuestions = state.settings.roundLength;
+        updateRoundProgressUI();
+      }
+    }
+
+    function getEffectiveMaxNumber() {
+      if (activeRound.mapConfig && activeRound.mapConfig.maxVal) {
+        // Gentle ramp-up inside the map: easy (first 35%) -> medium (middle 35%) -> hard (last 30%)
+        const ratio = activeRound.questionIndex / Math.max(1, activeRound.totalQuestions - 1);
+        const cap = activeRound.mapConfig.maxVal;
+        const floor = activeRound.mapConfig.minVal || 1;
+        if (ratio < 0.35) return Math.max(floor + 2, Math.ceil(cap * 0.65));
+        if (ratio < 0.75) return Math.max(floor + 3, Math.ceil(cap * 0.85));
+        return cap;
+      }
+      if (activeRound.maxNumOverride) return activeRound.maxNumOverride;
+      if (state.settings.numberRange === '10') return 10;
+      if (state.settings.numberRange === '20') return 20;
+      if (state.stats.totalCorrect >= 12 || state.stats.currentStreak >= 5) return 20;
+      return 10;
+    }
+
+    // Main question generator supporting all 30-map skills & free-play modes
+    function generateMathQuestion() {
+      // 1. If in Warmup mode and saved mistakes exist, pull from saved mistakes first
+      if (activeRound.mode === 'warmup' && state.mistakes.length > 0 && activeRound.questionIndex < state.mistakes.length) {
+        const saved = state.mistakes[activeRound.questionIndex];
+        if (saved && saved.choices && typeof saved.correctIndex === 'number') {
+          return Object.assign({}, saved, { fromMistakeBank: true });
+        }
+      }
+
+      const maxNum = getEffectiveMaxNumber();
+      const objItem = VISUAL_OBJECTS[Math.floor(Math.random() * VISUAL_OBJECTS.length)];
+      let skillType = 'addition';
+      let miniGameType = 'choices';
+
+      if (activeRound.mapConfig) {
+        const skillsList = activeRound.mapConfig.skills || ['addition'];
+        // Ramp skill selection across the round
+        const sIdx = Math.min(skillsList.length - 1, Math.floor((activeRound.questionIndex / Math.max(1, activeRound.totalQuestions)) * skillsList.length));
+        skillType = skillsList[(sIdx + activeRound.questionIndex) % skillsList.length];
+        miniGameType = activeRound.mapConfig.miniGame || 'choices';
+      } else {
+        if (activeRound.mode === 'addition') skillType = 'addition';
+        else if (activeRound.mode === 'subtraction') skillType = 'subtraction';
+        else if (activeRound.mode === 'picture') skillType = 'add_pic';
+        else {
+          const pool = ['addition', 'subtraction', 'add_pic', 'number_bonds', 'missing_num'];
+          skillType = pool[Math.floor(Math.random() * pool.length)];
+        }
+      }
+
+      let qObj = null;
+      for (let attempt = 0; attempt < 35; attempt++) {
+        qObj = buildSkillQuestion(skillType, maxNum, objItem, miniGameType);
+        if (activeRound.askedKeys.indexOf(qObj.key) === -1) {
+          break;
+        }
+      }
+      activeRound.askedKeys.push(qObj.key);
+      return qObj;
+    }
+
+    function buildSkillQuestion(skillType, maxNum, objItem, preferredMiniGame) {
+      let a = 2, b = 3, c = 0, op = '+', answer = 5;
+      let eqLeft = '2', eqOp = '+', eqRight = '3', eqResult = '?';
+      let promptText = '';
+      let hintText = '';
+      let skillCategory = 'addition';
+      let questionSubtype = 'number';
+      let customChoices = null;
+      let correctChoiceText = '';
+
+      if (skillType === 'counting') {
+        skillCategory = 'counting';
+        a = 1 + Math.floor(Math.random() * Math.min(5, maxNum));
+        b = 0;
+        op = '+';
+        answer = a;
+        eqLeft = String(a);
+        eqOp = '+';
+        eqRight = '0';
+        eqResult = '?';
+        promptText = '数一数图中有几个' + objItem.name + '？也可以把它们装进果篮里哦！';
+        hintText = '跟着数字标号 1 到 ' + a + ' 数一数，一共有 ' + a + ' ' + objItem.unit + objItem.name + '！';
+      } else if (skillType === 'number_bonds') {
+        skillCategory = 'missing_bonds';
+        answer = 1 + Math.floor(Math.random() * Math.max(3, maxNum - 2));
+        a = 1 + Math.floor(Math.random() * Math.max(2, maxNum - answer));
+        const total = a + answer;
+        b = answer;
+        op = '+';
+        eqLeft = String(total);
+        eqOp = '=';
+        eqRight = a + ' +';
+        eqResult = '?';
+        promptText = '数字分解：' + total + ' 可以分成 ' + a + ' 和几呢？（' + total + ' = ' + a + ' + ?）';
+        hintText = '想一想：' + a + ' 再添上 ' + answer + ' 就是 ' + total + ' 啦，所以填 ' + answer + '！';
+      } else if (skillType === 'missing_num') {
+        skillCategory = 'missing_bonds';
+        answer = 1 + Math.floor(Math.random() * Math.max(3, maxNum - 2));
+        a = 1 + Math.floor(Math.random() * Math.max(2, maxNum - answer));
+        const total = a + answer;
+        b = answer;
+        op = '+';
+        eqLeft = String(a);
+        eqOp = '+';
+        eqRight = '[ ? ]';
+        eqResult = String(total);
+        promptText = '填空小侦探：' + a + ' 加上几等于 ' + total + ' 呢？';
+        hintText = '用总数 ' + total + ' 减去 ' + a + '，就知道括号里应该填 ' + answer + ' 啦！';
+      } else if (skillType === 'compare') {
+        skillCategory = 'word_compare';
+        a = 1 + Math.floor(Math.random() * Math.min(9, maxNum));
+        const d1 = Math.floor(Math.random() * 4);
+        const leftVal = a + d1;
+        b = 1 + Math.floor(Math.random() * Math.min(10, maxNum));
+        op = 'compare';
+        correctChoiceText = leftVal > b ? '>' : leftVal < b ? '<' : '=';
+        customChoices = ['>', '<', '=', leftVal >= b ? '>' : '<'];
+        // Ensure 4 distinct choices for the 4 buttons
+        customChoices = ['>', '<', '=', '一样大(=)'];
+        if (correctChoiceText === '=') customChoices[3] = '≠';
+        answer = leftVal;
+        eqLeft = a + '+' + d1;
+        eqOp = '?';
+        eqRight = String(b);
+        eqResult = '比大小';
+        promptText = '天平比大小：左边是 ' + a + '+' + d1 + '（等于' + leftVal + '），右边是 ' + b + '，中间填哪个符号？';
+        hintText = '左边算出来是 ' + leftVal + '，右边是 ' + b + '，所以应该选【' + correctChoiceText + '】哦！';
+      } else if (skillType === 'word_problem_10' || skillType === 'word_problem_20') {
+        skillCategory = 'word_compare';
+        const cap = skillType === 'word_problem_10' ? 10 : Math.min(20, maxNum);
+        if (Math.random() < 0.55) {
+          op = '+';
+          a = 2 + Math.floor(Math.random() * Math.floor(cap * 0.5));
+          b = 1 + Math.floor(Math.random() * Math.max(2, cap - a));
+          answer = a + b;
+          promptText = '📖 应用题：草地上原来有 ' + a + ' ' + objItem.unit + objItem.name + '，又来了 ' + b + ' ' + objItem.unit + '，现在一共有几个？';
+          hintText = '把原来的 ' + a + ' 个和新来的 ' + b + ' 个合起来：' + a + ' + ' + b + ' = ' + answer + '！';
+        } else {
+          op = '-';
+          a = 4 + Math.floor(Math.random() * Math.max(3, cap - 4));
+          b = 1 + Math.floor(Math.random() * (a - 1));
+          answer = a - b;
+          promptText = '📖 应用题：篮子里有 ' + a + ' ' + objItem.unit + objItem.name + '，小动物吃掉了 ' + b + ' ' + objItem.unit + '，还剩下几个？';
+          hintText = '从 ' + a + ' 个里面拿走 ' + b + ' 个：' + a + ' - ' + b + ' = ' + answer + '！';
+        }
+        eqLeft = String(a);
+        eqOp = op;
+        eqRight = String(b);
+        eqResult = '?';
+      } else if (skillType === 'make_10') {
+        skillCategory = 'speed_strategy';
+        a = 7 + Math.floor(Math.random() * 3); // 7, 8, or 9
+        const needTo10 = 10 - a;
+        b = needTo10 + 1 + Math.floor(Math.random() * 5);
+        op = '+';
+        answer = a + b;
+        eqLeft = String(a);
+        eqOp = '+';
+        eqRight = String(b);
+        eqResult = '?';
+        const rem = b - needTo10;
+        promptText = '⚡ 凑十法巧算：算 ' + a + ' + ' + b + ' 时，先把 ' + b + ' 分成 ' + needTo10 + ' 和 ' + rem + '，' + a + '+' + needTo10 + '=10，10+' + rem + ' 等于几？';
+        hintText = '凑十法秘诀：' + a + ' + ' + needTo10 + ' = 10，再用 10 + ' + rem + ' = ' + answer + '！';
+      } else if (skillType === 'doubles') {
+        skillCategory = 'speed_strategy';
+        a = 3 + Math.floor(Math.random() * 7); // 3+3 up to 9+9
+        b = a;
+        op = '+';
+        answer = a + b;
+        eqLeft = String(a);
+        eqOp = '+';
+        eqRight = String(b);
+        eqResult = '?';
+        promptText = '♊ 双数巧算：两个一样的数相加，' + a + ' + ' + a + ' 等于多少？';
+        hintText = '两个 ' + a + ' 加在一起是 ' + answer + ' 哦！';
+      } else if (skillType === 'number_line_20') {
+        skillCategory = 'speed_strategy';
+        if (Math.random() < 0.55) {
+          op = '+';
+          a = 6 + Math.floor(Math.random() * 7);
+          b = 2 + Math.floor(Math.random() * 6);
+          answer = a + b;
+          promptText = '🪐 数轴跳跃：从数字 ' + a + ' 出发，向右边跳 ' + b + ' 格，会停在数字几？';
+        } else {
+          op = '-';
+          a = 11 + Math.floor(Math.random() * 8);
+          b = 2 + Math.floor(Math.random() * 6);
+          answer = a - b;
+          promptText = '🪐 数轴跳跃：从数字 ' + a + ' 出发，向左边退 ' + b + ' 格，会停在数字几？';
+        }
+        eqLeft = String(a);
+        eqOp = op;
+        eqRight = String(b);
+        eqResult = '?';
+        hintText = '在数轴上从 ' + a + ' 一步步跳 ' + b + ' 格，就到达 ' + answer + ' 啦！';
+      } else if (skillType === 'three_num') {
+        skillCategory = 'speed_strategy';
+        a = 2 + Math.floor(Math.random() * 6);
+        b = 1 + Math.floor(Math.random() * 5);
+        c = 1 + Math.floor(Math.random() * 5);
+        op = '+';
+        answer = a + b + c;
+        eqLeft = a + ' + ' + b;
+        eqOp = '+';
+        eqRight = String(c);
+        eqResult = '?';
+        promptText = '🦕 三数连加：先算 ' + a + ' + ' + b + ' = ' + (a + b) + '，再加上 ' + c + ' 等于多少？';
+        hintText = '第一步 ' + a + ' + ' + b + ' = ' + (a + b) + '，第二步 ' + (a + b) + ' + ' + c + ' = ' + answer + '！';
+      } else if (skillType === 'pattern') {
+        skillCategory = 'word_compare';
+        const step = [1, 2, 3, 5][Math.floor(Math.random() * 4)];
+        const start = 1 + Math.floor(Math.random() * 4);
+        const n1 = start, n2 = start + step, n3 = start + step * 2;
+        answer = start + step * 3;
+        a = n3;
+        b = step;
+        op = '+';
+        eqLeft = n1 + ', ' + n2;
+        eqOp = ',';
+        eqRight = String(n3);
+        eqResult = '?';
+        promptText = '🐾 找规律填数：' + n1 + '，' + n2 + '，' + n3 + '，（ ？ ）——每次增加 ' + step + '，下一个数是多少？';
+        hintText = '规律是每次加 ' + step + '，所以 ' + n3 + ' + ' + step + ' = ' + answer + '！';
+      } else if (skillType === 'subtraction') {
+        skillCategory = 'subtraction';
+        op = '-';
+        a = 1 + Math.floor(Math.random() * maxNum);
+        b = Math.floor(Math.random() * (a + 1));
+        answer = a - b;
+        eqLeft = String(a);
+        eqOp = '-';
+        eqRight = String(b);
+        eqResult = '?';
+        promptText = '原来有 ' + a + ' ' + objItem.unit + objItem.name + '，拿走 ' + b + ' ' + objItem.unit + '，还剩几个？';
+        hintText = '原来有 ' + a + ' 个，跳走了 ' + b + ' 个，数一数没跳走的还剩 ' + answer + ' 个！';
+      } else {
+        // Default addition or picture addition
+        skillCategory = skillType === 'add_pic' ? 'counting' : 'addition';
+        op = '+';
+        answer = 1 + Math.floor(Math.random() * Math.max(2, maxNum));
+        a = Math.floor(Math.random() * (answer + 1));
+        b = answer - a;
+        eqLeft = String(a);
+        eqOp = '+';
+        eqRight = String(b);
+        eqResult = '?';
+        promptText = a + ' ' + objItem.unit + objItem.name + '加上 ' + b + ' ' + objItem.unit + '，一共有几个？';
+        hintText = '左边有 ' + a + ' 个，右边有 ' + b + ' 个，合起来数一数是 ' + answer + ' 个！';
+      }
+
+      // Build 4 answer choices
+      let choices = [];
+      if (customChoices) {
+        choices = customChoices.slice(0, 4);
+      } else {
+        correctChoiceText = String(answer);
+        choices = [correctChoiceText];
+        const offsets = [-2, -1, 1, 2, 3, -3, 4];
+        for (let i = 0; i < offsets.length && choices.length < 4; i++) {
+          const cand = answer + offsets[i];
+          if (cand >= 0 && cand <= Math.max(22, maxNum + 3) && choices.indexOf(String(cand)) === -1) {
+            choices.push(String(cand));
+          }
+        }
+        let fb = 0;
+        while (choices.length < 4) {
+          if (choices.indexOf(String(fb)) === -1) choices.push(String(fb));
+          fb++;
+        }
+        for (let i = choices.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const tmp = choices[i];
+          choices[i] = choices[j];
+          choices[j] = tmp;
+        }
+      }
+
+      return {
+        key: skillType + ':' + eqLeft + eqOp + eqRight + '=' + correctChoiceText,
+        subMode: skillCategory === 'subtraction' ? 'subtraction' : skillCategory === 'counting' ? 'picture' : 'addition',
+        skillType: skillType,
+        skillCategory: skillCategory,
+        miniGameType: preferredMiniGame,
+        questionSubtype: questionSubtype,
+        a: a,
+        b: b,
+        c: c,
+        op: op === 'compare' ? '+' : op,
+        answer: answer,
+        eqLeft: eqLeft,
+        eqOp: eqOp,
+        eqRight: eqRight,
+        eqResult: eqResult,
+        promptText: promptText,
+        hintText: hintText,
+        objItem: objItem,
+        choices: choices,
+        correctIndex: choices.indexOf(correctChoiceText),
+        correctChoiceText: correctChoiceText
+      };
+    }
+
+    /* =========================================================================
+       8. INTERACTIVE STAGE & 7 MINI-GAME RENDERERS
+       ========================================================================= */
+    function updateRoundProgressUI() {
+      const labelEl = document.getElementById('playModeLabel');
+      const mapCfg = activeRound.mapConfig;
+      if (labelEl) {
+        if (activeRound.levelNum && mapCfg) {
+          labelEl.textContent = (activeRound.isPracticeReplay ? '🔄 练习 · ' : '🗺️ ') + mapCfg.name;
+        } else if (activeRound.mode === 'warmup') {
+          labelEl.textContent = '🌅 每日热身复习';
+        } else {
+          const modeNames = { addition: '➕ 加法乐园', subtraction: '➖ 减法乐园', picture: '🍎 看图算数', random: '🎲 随机挑战' };
+          labelEl.textContent = modeNames[activeRound.mode] || '➕ 数学乐园';
+        }
+      }
+
+      const stepNum = Math.min(activeRound.questionIndex + 1, activeRound.totalQuestions);
+      const stepEl = document.getElementById('roundStepText');
+      if (stepEl) {
+        stepEl.textContent = (activeRound.inMistakeReviewPhase ? '🌟 错题巩固 ' : '第 ') + stepNum + ' / ' + activeRound.totalQuestions + ' 题';
+      }
+
+      const pct = Math.round(((stepNum - 1) / Math.max(1, activeRound.totalQuestions)) * 100);
+      const barEl = document.getElementById('roundProgressBar');
+      if (barEl) barEl.style.width = Math.max(10, pct) + '%';
+
+      const pinEl = document.getElementById('walkingAvatarPin');
+      const charObj = CHARACTERS.find(function (c) { return c.id === state.equippedChar; }) || CHARACTERS[0];
+      if (pinEl) {
+        pinEl.textContent = charObj.icon;
+        pinEl.style.left = Math.min(90, Math.max(4, pct)) + '%';
+      }
+
+      const comboEl = document.getElementById('comboStreakBadge');
+      if (comboEl) comboEl.textContent = '🔥 连击 x' + state.stats.currentStreak;
+
+      // Boss HP Banner
+      const bossBanner = document.getElementById('bossBattleBanner');
+      if (bossBanner) {
+        if (mapCfg && mapCfg.isBoss) {
+          bossBanner.classList.add('active');
+          document.getElementById('bossEmojiIcon').textContent = mapCfg.bossEmoji || '🦖';
+          document.getElementById('bossNameTitle').textContent = mapCfg.bossName || '守关大魔王';
+          document.getElementById('bossHpFill').style.width = Math.max(0, activeRound.bossHp) + '%';
+          document.getElementById('bossHpText').textContent = 'HP ' + Math.max(0, Math.round(activeRound.bossHp)) + '%';
+        } else {
+          bossBanner.classList.remove('active');
+        }
+      }
+    }
+
+    function startGentleSpeedTimerIfNeeded() {
+      stopGentleSpeedTimer();
+      const timerBar = document.getElementById('gentleTimerBar');
+      const timerFill = document.getElementById('gentleTimerFill');
+      if (!activeRound.mapConfig || !activeRound.mapConfig.speedTimer) {
+        if (timerBar) timerBar.classList.remove('active');
+        return;
+      }
+      if (timerBar) timerBar.classList.add('active');
+      gentleSpeedRemaining = 100;
+      if (timerFill) timerFill.style.width = '100%';
+
+      gentleSpeedInterval = setInterval(function () {
+        if (activeRound.answeredCurrent) {
+          stopGentleSpeedTimer();
+          return;
+        }
+        gentleSpeedRemaining = Math.max(0, gentleSpeedRemaining - 2);
+        if (timerFill) timerFill.style.width = gentleSpeedRemaining + '%';
+        if (gentleSpeedRemaining <= 0) {
+          stopGentleSpeedTimer();
+          const fb = document.getElementById('playFeedbackText');
+          if (fb) fb.textContent = '⏳ 沙漏流完啦，慢慢想也没关系，我们继续算出答案吧！';
+        }
+      }, 350);
+    }
+
+    function stopGentleSpeedTimer() {
+      if (gentleSpeedInterval) {
+        clearInterval(gentleSpeedInterval);
+        gentleSpeedInterval = null;
+      }
+    }
+
+    function loadNextQuestionInRound() {
+      if (activeRound.inMistakeReviewPhase && activeRound.mistakeRetryQueue.length > 0) {
+        activeRound.currentQuestion = activeRound.mistakeRetryQueue.shift();
+      } else {
+        activeRound.currentQuestion = generateMathQuestion();
+      }
+      activeRound.attemptsOnCurrent = 0;
+      activeRound.answeredCurrent = false;
+
+      updateRoundProgressUI();
+      renderPlayMascot('wave');
+      startGentleSpeedTimerIfNeeded();
+
+      const q = activeRound.currentQuestion;
+      document.getElementById('eqPart1').textContent = q.eqLeft;
+      document.getElementById('eqOperator').textContent = q.eqOp;
+      document.getElementById('eqPart2').textContent = q.eqRight;
+      const ansSlot = document.getElementById('eqAnswerSlot');
+      ansSlot.textContent = q.eqResult;
+      ansSlot.classList.remove('solved');
+
+      const storyStrip = document.getElementById('storyQuestText');
+      if (storyStrip) {
+        storyStrip.textContent = activeRound.mapConfig
+          ? '📖 ' + activeRound.mapConfig.story
+          : '🌈 自由练习模式：开动小脑筋，选出正确答案吧！';
+      }
+
+      const fbText = document.getElementById('playFeedbackText');
+      fbText.className = 'feedback-text';
+      fbText.textContent = q.promptText;
+
+      // Render visual countable objects (for numbers <= 20)
+      renderVisualObjectsStage(q);
+
+      // Render Interactive Mini-Game Zone
+      renderInteractiveMiniGame(q);
+
+      // Render 4 Answer Buttons
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById('ansBtn' + i);
+        if (btn) {
+          btn.textContent = q.choices[i];
+          btn.disabled = false;
+          btn.className = 'answer-btn opt-' + i;
+        }
+      }
+
+      const hintBox = document.getElementById('hintExplanationBox');
+      if (hintBox) {
+        hintBox.className = 'hint-explanation-box';
+        hintBox.textContent = '';
+      }
+
+      const nextBtn = document.getElementById('nextQuestionBtn');
+      if (nextBtn) nextBtn.classList.remove('visible');
+    }
+
+    function renderVisualObjectsStage(q) {
+      const container = document.getElementById('visualGroupsContainer');
+      const replayBtn = document.getElementById('replayAnimBtn');
+      if (!container) return;
+      container.innerHTML = '';
+
+      // Keep visual tray clean and accurate to the math question
+      const totalVisuals = q.op === '+' ? (q.a + q.b) : q.a;
+      if (totalVisuals > 20 || q.skillType === 'compare' || q.skillType === 'pattern') {
+        if (replayBtn) replayBtn.style.display = 'none';
+        return;
+      }
+
+      if (q.op === '+') {
+        if (replayBtn) replayBtn.style.display = 'none';
+        const trayLeft = document.createElement('div');
+        trayLeft.className = 'object-tray';
+        if (q.a === 0) {
+          trayLeft.innerHTML = '<span style="font-weight:800;color:#868E96;">0 (空盘子)</span>';
+        } else {
+          for (let i = 0; i < q.a; i++) {
+            trayLeft.appendChild(createCountableNode(q.objItem, i + 1, false));
+          }
+        }
+        container.appendChild(trayLeft);
+
+        if (q.b > 0 || q.skillType !== 'counting') {
+          const plusBadge = document.createElement('div');
+          plusBadge.className = 'tray-plus-badge';
+          plusBadge.textContent = '+';
+          const trayRight = document.createElement('div');
+          trayRight.className = 'object-tray';
+          if (q.b === 0) {
+            trayRight.innerHTML = '<span style="font-weight:800;color:#868E96;">0 (空盘子)</span>';
+          } else {
+            for (let j = 0; j < q.b; j++) {
+              trayRight.appendChild(createCountableNode(q.objItem, q.a + j + 1, false));
+            }
+          }
+          container.appendChild(plusBadge);
+          container.appendChild(trayRight);
+        }
+      } else {
+        if (replayBtn) replayBtn.style.display = q.b > 0 ? 'inline-block' : 'none';
+        const tray = document.createElement('div');
+        tray.className = 'object-tray';
+        for (let i = 0; i < q.a; i++) {
+          const isLeaving = i >= q.answer;
+          const countOrder = isLeaving ? null : (i + 1);
+          tray.appendChild(createCountableNode(q.objItem, countOrder, isLeaving));
+        }
+        container.appendChild(tray);
+      }
+    }
+
+    // Renders the map's interactive mini-game widget inside #miniGameInteractiveZone
+    function renderInteractiveMiniGame(q) {
+      const zone = document.getElementById('miniGameInteractiveZone');
+      const badge = document.getElementById('miniGameTypeBadge');
+      if (!zone) return;
+      zone.innerHTML = '';
+
+      const mgType = q.miniGameType || 'choices';
+      const mgNames = {
+        drag_count: '🧺 装篮数数小游戏',
+        number_line: '🐸 数轴跳一跳',
+        balance_scale: '⚖️ 魔法天平翘翘板',
+        feed_animal: '🍓 喂食小萌宠',
+        balloon_pop: '🎈 戳气球大作战',
+        match_pairs: '🃏 翻牌配对消消乐',
+        build_tiles: '🧩 算式积木拼图'
+      };
+      if (badge) badge.textContent = mgNames[mgType] || '✨ 趣味互动';
+
+      if (mgType === 'drag_count' && typeof q.answer === 'number' && q.answer <= 12) {
+        let basketCount = 0;
+        const wrap = document.createElement('div');
+        wrap.className = 'basket-dropzone';
+        wrap.innerHTML = `
+          <div style="font-weight:900;color:#B45309;">🧺 魔法果篮：已放入 <span id="mgBasketNum">0</span> ${q.objItem.unit}${q.objItem.name}（目标：算出答案）</div>
+          <div class="basket-items-row" id="mgBasketRow"></div>
+          <div class="minigame-action-row">
+            <button type="button" class="mg-pill-btn" id="mgAddOneBtn">➕ 放进 1 ${q.objItem.unit}${q.objItem.emoji}</button>
+            <button type="button" class="mg-pill-btn" id="mgRemoveOneBtn">➖ 拿走 1 ${q.objItem.unit}</button>
+            <button type="button" class="mg-pill-btn submit-green" id="mgSubmitBasketBtn">✓ 就装这么多！</button>
+          </div>
+        `;
+        zone.appendChild(wrap);
+
+        const updateBasketUI = function () {
+          document.getElementById('mgBasketNum').textContent = String(basketCount);
+          const row = document.getElementById('mgBasketRow');
+          row.innerHTML = '';
+          for (let i = 0; i < basketCount; i++) {
+            const sp = document.createElement('span');
+            sp.style.fontSize = '1.6rem';
+            sp.textContent = q.objItem.emoji;
+            row.appendChild(sp);
+          }
+        };
+        wrap.querySelector('#mgAddOneBtn').addEventListener('click', function () {
+          if (basketCount < 20) {
+            basketCount++;
+            playCountNote(basketCount - 1);
+            updateBasketUI();
+          }
+        });
+        wrap.querySelector('#mgRemoveOneBtn').addEventListener('click', function () {
+          if (basketCount > 0) {
+            basketCount--;
+            playButtonPop();
+            updateBasketUI();
+          }
+        });
+        wrap.querySelector('#mgSubmitBasketBtn').addEventListener('click', function () {
+          if (String(basketCount) === q.correctChoiceText) {
+            selectAnswer(q.correctIndex);
+          } else {
+            const idx = q.choices.indexOf(String(basketCount));
+            selectAnswer(idx !== -1 ? idx : (q.correctIndex + 1) % 4);
+          }
+        });
+      } else if (mgType === 'number_line' && typeof q.answer === 'number') {
+        const maxLine = q.answer > 10 || q.a > 10 ? 20 : 10;
+        let currentHop = Math.min(maxLine, Math.max(0, q.a));
+        const nlWrap = document.createElement('div');
+        nlWrap.className = 'number-line-wrap';
+        const track = document.createElement('div');
+        track.className = 'number-line-track';
+
+        const renderNodes = function () {
+          track.innerHTML = '';
+          for (let n = 0; n <= maxLine; n++) {
+            const node = document.createElement('div');
+            node.className = 'nl-node' + (n === currentHop ? ' active-hop' : '');
+            node.innerHTML = (n === currentHop ? '<div class="nl-hopper">🐸</div>' : '') + `<div class="nl-dot">${n}</div>`;
+            node.addEventListener('click', function () {
+              currentHop = n;
+              playCountNote(n);
+              renderNodes();
+              if (String(n) === q.correctChoiceText) {
+                selectAnswer(q.correctIndex);
+              }
+            });
+            track.appendChild(node);
+          }
+        };
+        renderNodes();
+        nlWrap.appendChild(track);
+        zone.appendChild(nlWrap);
+      } else if (mgType === 'balance_scale') {
+        const tilt = q.correctChoiceText === '>' ? -8 : q.correctChoiceText === '<' ? 8 : 0;
+        const box = document.createElement('div');
+        box.className = 'scale-svg-box';
+        box.innerHTML = `
+          <svg viewBox="0 0 260 95" width="100%" height="100%">
+            <polygon points="130,45 112,88 148,88" fill="#7950F2"/>
+            <g transform="rotate(${tilt} 130 45)">
+              <line x1="35" y1="45" x2="225" y2="45" stroke="#3A3252" stroke-width="5" stroke-linecap="round"/>
+              <rect x="18" y="18" width="68" height="26" rx="8" fill="#FFE066" stroke="#D98200" stroke-width="2"/>
+              <text x="52" y="36" text-anchor="middle" font-size="14" font-weight="900" fill="#5C3C00">${q.eqLeft}</text>
+              <rect x="174" y="18" width="68" height="26" rx="8" fill="#74C0FC" stroke="#1971C2" stroke-width="2"/>
+              <text x="208" y="36" text-anchor="middle" font-size="14" font-weight="900" fill="#FFFFFF">${q.eqRight}</text>
+            </g>
+          </svg>
+        `;
+        zone.appendChild(box);
+      } else if (mgType === 'balloon_pop') {
+        const bStage = document.createElement('div');
+        bStage.className = 'balloons-stage';
+        const bColors = ['#FF85B3', '#4DABF7', '#FCC419', '#9775FA'];
+        q.choices.forEach(function (ch, idx) {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'balloon-btn';
+          b.style.background = bColors[idx % bColors.length];
+          b.style.animationDelay = (idx * 0.3) + 's';
+          b.textContent = '🎈 ' + ch;
+          b.addEventListener('click', function () {
+            b.style.transform = 'scale(1.25)';
+            selectAnswer(idx);
+          });
+          bStage.appendChild(b);
+        });
+        zone.appendChild(bStage);
+      } else if (mgType === 'feed_animal') {
+        const feedRow = document.createElement('div');
+        feedRow.style.cssText = 'display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;background:#FFF0F6;padding:8px 16px;border-radius:16px;border:2px solid #FFADCA;';
+        feedRow.innerHTML = `<span style="font-size:1.9rem;">🐹🍽️</span><span style="font-weight:900;color:#C2255C;">点击下方带有正确答案的美味果子喂给小动物吧！</span>`;
+        zone.appendChild(feedRow);
+      } else if (mgType === 'match_pairs') {
+        const info = document.createElement('div');
+        info.style.cssText = 'font-weight:800;color:#5F3DC4;font-size:0.9rem;';
+        info.textContent = '🃏 找到与算式相等的答案卡片配成一对吧！';
+        zone.appendChild(info);
+      }
+    }
+
+    function createCountableNode(objItem, badgeNumber, isHoppingAway) {
+      const item = document.createElement('div');
+      item.className = 'countable-item' + (isHoppingAway ? ' hopping-away' : '');
+      if (badgeNumber !== null) item.setAttribute('data-count-index', String(badgeNumber));
+
+      const numBadge = document.createElement('span');
+      numBadge.className = 'count-num-badge';
+      numBadge.textContent = badgeNumber !== null ? String(badgeNumber) : '';
+      item.appendChild(numBadge);
+
+      const svgHolder = document.createElement('div');
+      svgHolder.innerHTML = renderObjectMiniSVG(objItem.id);
+      item.appendChild(svgHolder);
+
+      if (isHoppingAway) {
+        const tag = document.createElement('span');
+        tag.className = 'hop-away-tag';
+        tag.textContent = '跳走啦';
+        item.appendChild(tag);
+      }
+
+      item.addEventListener('click', function () {
+        if (isHoppingAway) {
+          playGentleRetrySound();
+          speakChinese('这只已经跳走啦，不用数它哦');
+          return;
+        }
+        item.classList.add('counted-highlight');
+        playCountNote((badgeNumber || 1) - 1);
+        if (badgeNumber !== null) speakChinese(String(badgeNumber));
+      });
+      return item;
+    }
+
+    function replaySubtractionAnimation() {
+      playButtonPop();
+      if (activeRound.currentQuestion) renderVisualObjectsStage(activeRound.currentQuestion);
+    }
+
+    function triggerVisualCountHint() {
+      ensureAudioContext();
+      const items = document.querySelectorAll('.countable-item[data-count-index]');
+      if (items.length === 0) {
+        if (activeRound.currentQuestion) speakChinese(activeRound.currentQuestion.hintText);
+        return;
+      }
+      for (let i = 0; i < items.length; i++) items[i].classList.remove('counted-highlight');
+      for (let i = 0; i < items.length; i++) {
+        (function (idx, el) {
+          setTimeout(function () {
+            el.classList.add('counted-highlight');
+            playCountNote(idx);
+          }, idx * 240);
+        })(i, items[i]);
+      }
+    }
+
+    function readCurrentQuestion() {
+      ensureAudioContext();
+      playButtonPop();
+      if (activeRound.currentQuestion) speakChinese(activeRound.currentQuestion.promptText);
+    }
+
+    function renderPlayMascot(mood) {
+      const box = document.getElementById('playMascotSvg');
+      if (!box) return;
+      box.className = 'mascot-svg-wrap ' + (mood === 'happy' ? 'mascot-anim-happy' : mood === 'encourage' ? 'mascot-anim-encourage' : 'mascot-anim-wave');
+      box.innerHTML = renderMascotSVG(state.equippedChar, state.equippedHat, mood);
+    }
+
+    /* =========================================================================
+       9. ANSWER EVALUATION, SMART MISTAKE TRACKING & BOSS DAMAGE
+       ========================================================================= */
+    function selectAnswer(choiceIndex) {
+      ensureAudioContext();
+      if (activeRound.answeredCurrent) return;
+      const q = activeRound.currentQuestion;
+      if (!q) return;
+
+      const btn = document.getElementById('ansBtn' + choiceIndex);
+      const fbText = document.getElementById('playFeedbackText');
+      const hintBox = document.getElementById('hintExplanationBox');
+      const eqAnswerSlot = document.getElementById('eqAnswerSlot');
+
+      const skillCat = q.skillCategory || 'addition';
+      if (!state.stats.skillStats[skillCat]) {
+        state.stats.skillStats[skillCat] = { total: 0, correct: 0 };
+      }
+
+      if (choiceIndex === q.correctIndex) {
+        // CORRECT ANSWER
+        activeRound.answeredCurrent = true;
+        stopGentleSpeedTimer();
+        playSuccessSound();
+        launchStarBurst();
+        renderPlayMascot('happy');
+
+        if (btn) btn.classList.add('correct-pick');
+        for (let i = 0; i < 4; i++) {
+          const b = document.getElementById('ansBtn' + i);
+          if (b) b.disabled = true;
+        }
+
+        eqAnswerSlot.textContent = q.correctChoiceText;
+        eqAnswerSlot.classList.add('solved');
+
+        const firstTry = activeRound.attemptsOnCurrent === 0;
+        const starsWon = firstTry ? 2 : 1;
+        state.stars += starsWon;
+        state.totalStarsEarned += starsWon;
+        activeRound.starsEarnedInRound += starsWon;
+        activeRound.correctInRound += 1;
+
+        state.stats.skillStats[skillCat].total += 1;
+        if (firstTry) {
+          activeRound.firstTryCorrectInRound += 1;
+          state.stats.skillStats[skillCat].correct += 1;
+          state.stats.currentStreak += 1;
+          if (state.stats.currentStreak > state.stats.bestStreak) {
+            state.stats.bestStreak = state.stats.currentStreak;
+          }
+          // If answered correctly in Warmup, remove from mistake bank!
+          if (q.fromMistakeBank) {
+            state.mistakes = state.mistakes.filter(function (m) { return m.key !== q.key; });
+          }
+        }
+
+        // Deal Boss Damage if on a Boss map
+        if (activeRound.mapConfig && activeRound.mapConfig.isBoss) {
+          const dmg = Math.ceil(100 / Math.max(1, activeRound.totalQuestions));
+          activeRound.bossHp = Math.max(0, activeRound.bossHp - dmg);
+          updateRoundProgressUI();
+        }
+
+        // Update legacy subject counters
+        state.stats.totalCompleted += 1;
+        state.stats.totalCorrect += 1;
+        if (q.subMode === 'addition') {
+          state.stats.additionTotal += 1;
+          state.stats.additionCorrect += 1;
+        } else if (q.subMode === 'subtraction') {
+          state.stats.subtractionTotal += 1;
+          state.stats.subtractionCorrect += 1;
+        } else {
+          state.stats.pictureTotal += 1;
+          state.stats.pictureCorrect += 1;
+        }
+
+        checkAndUnlockTrophies(false);
+        saveState();
+        syncTopBarAndSettingsUI();
+
+        const praise = PRAISE_PHRASES[Math.floor(Math.random() * PRAISE_PHRASES.length)];
+        if (fbText) {
+          fbText.className = 'feedback-text correct-msg';
+          fbText.textContent = '🌟 ' + praise + '（获得 +' + starsWon + ' ⭐）';
+        }
+        speakChinese(praise);
+
+        const nextBtn = document.getElementById('nextQuestionBtn');
+        if (nextBtn) {
+          nextBtn.classList.add('visible');
+          const hasMore = (activeRound.questionIndex + 1 < activeRound.totalQuestions) || (activeRound.mistakeRetryQueue.length > 0);
+          nextBtn.querySelector('span').textContent = hasMore ? '下一题' : '查看本关奖励 🎉';
+        }
+      } else {
+        // WRONG ANSWER -> Record mistake, re-queue at end of map, show gentle auto-hint
+        activeRound.attemptsOnCurrent += 1;
+        state.stats.currentStreak = 0;
+        playGentleRetrySound();
+        renderPlayMascot('encourage');
+
+        if (btn) {
+          btn.disabled = true;
+          btn.classList.add('gentle-retry');
+        }
+
+        // Save to mistake bank & end-of-map retry queue on first miss
+        if (activeRound.attemptsOnCurrent === 1) {
+          const alreadyQueued = activeRound.mistakeRetryQueue.some(function (m) { return m.key === q.key; });
+          if (!alreadyQueued && !activeRound.inMistakeReviewPhase) {
+            activeRound.mistakeRetryQueue.push(Object.assign({}, q));
+          }
+          const inBank = state.mistakes.some(function (m) { return m.key === q.key; });
+          if (!inBank) {
+            state.mistakes.unshift(Object.assign({}, q));
+            if (state.mistakes.length > 15) state.mistakes.pop();
+            saveState();
+          }
+        }
+
+        const retryMsg = RETRY_PHRASES[Math.floor(Math.random() * RETRY_PHRASES.length)];
+        if (fbText) {
+          fbText.className = 'feedback-text encourage-msg';
+          fbText.textContent = '💡 ' + retryMsg;
+        }
+
+        triggerVisualCountHint();
+
+        if (hintBox) {
+          hintBox.classList.add('visible');
+          if (activeRound.attemptsOnCurrent === 1) {
+            hintBox.textContent = '💡 自动小提示：' + q.hintText;
+            speakChinese(retryMsg);
+          } else {
+            const correctBtn = document.getElementById('ansBtn' + q.correctIndex);
+            if (correctBtn) correctBtn.classList.add('guided-glow');
+            hintBox.textContent = '✨ 团团来帮你：' + q.hintText + ' 点一下闪光的【' + q.correctChoiceText + '】吧！';
+            speakChinese('正确答案是 ' + q.correctChoiceText + '，点一下闪光的按钮吧！');
+          }
+        }
+        updateRoundProgressUI();
+      }
+    }
+
+    function goToNextQuestion() {
+      playButtonPop();
+      if (!activeRound.inMistakeReviewPhase && activeRound.questionIndex + 1 < activeRound.totalQuestions) {
+        activeRound.questionIndex += 1;
+        loadNextQuestionInRound();
+      } else if (activeRound.mistakeRetryQueue.length > 0) {
+        // Enter end-of-map mistake consolidation phase!
+        activeRound.inMistakeReviewPhase = true;
+        loadNextQuestionInRound();
+      } else {
+        finishLearningRound();
+      }
+    }
+
+    function finishLearningRound() {
+      stopGentleSpeedTimer();
+      playFanfareSound();
+      launchStarBurst();
+
+      // Calculate 1 to 3 star rating for the map
+      const ratio = activeRound.firstTryCorrectInRound / Math.max(1, activeRound.totalQuestions);
+      const earnedRating = ratio >= 0.85 ? 3 : ratio >= 0.55 ? 2 : 1;
+      const passedMap = earnedRating >= 2;
+
+      let newlyUnlockedNote = '';
+      let tomorrowText = '';
+
+      if (activeRound.levelNum) {
+        const lv = activeRound.levelNum;
+        const prevStars = state.levelStars[lv] || 0;
+        if (earnedRating > prevStars) {
+          state.levelStars[lv] = earnedRating;
+        }
+
+        if (passedMap) {
+          const today = getTodayDateString();
+          if (state.completedDays.indexOf(today) === -1) {
+            state.completedDays.push(today);
+            state.dailyStreak = (state.dailyStreak || 1) + (state.lastCompletedDate && state.lastCompletedDate !== today ? 1 : 0);
+          }
+          state.lastCompletedDate = today;
+
+          // Unlock sticker reward for this map
+          const mapCfg = activeRound.mapConfig;
+          if (mapCfg && mapCfg.stickerReward && state.stickers.indexOf(mapCfg.stickerReward.id) === -1) {
+            state.stickers.push(mapCfg.stickerReward.id);
+            newlyUnlockedNote = '📒 获得新贴纸：【' + mapCfg.stickerReward.icon + ' ' + mapCfg.stickerReward.name + '】！';
+          }
+
+          if (!state.settings.dailyLimitEnabled && lv >= state.unlockedLevel && state.unlockedLevel < 30) {
+            state.unlockedLevel = lv + 1;
+            newlyUnlockedNote += ' 🎉 已解锁第 ' + state.unlockedLevel + ' 关！';
+          } else if (state.settings.dailyLimitEnabled && !activeRound.isPracticeReplay && lv === state.unlockedLevel && lv < 30) {
+            tomorrowText = '🌙 明天再来开启下一关新冒险吧！(Come back tomorrow for Map ' + (lv + 1) + '!) 今天你还可以随时重玩已通关地图或挑战自由练习哦！';
+          }
+        } else {
+          tomorrowText = '💡 通关需要至少 2 颗星（⭐⭐），今天可以立即点击【再玩一轮】重新挑战本关哦！';
+        }
+      }
+
+      const newTrophies = checkAndUnlockTrophies(true);
+      if (newTrophies.length > 0 && !newlyUnlockedNote) {
+        newlyUnlockedNote = '🏆 获得新奖杯：【' + newTrophies[0].name + '】！';
+      }
+
+      saveState();
+      syncTopBarAndSettingsUI();
+
+      // Populate Celebration Modal
+      const mascotBox = document.getElementById('modalCelebrationMascot');
+      if (mascotBox) mascotBox.innerHTML = renderMascotSVG(state.equippedChar, state.equippedHat, 'happy');
+
+      const starRow = document.getElementById('roundModalStarRow');
+      if (starRow) {
+        starRow.textContent = (earnedRating >= 1 ? '⭐' : '☆') + (earnedRating >= 2 ? '⭐' : '☆') + (earnedRating >= 3 ? '⭐' : '☆');
+      }
+
+      const titleEl = document.getElementById('roundModalTitle');
+      if (titleEl) {
+        if (activeRound.levelNum && !passedMap) {
+          titleEl.textContent = '💪 差一点点就通关啦！再试一次吧！';
+        } else {
+          titleEl.textContent = '🎉 太棒啦！完成本轮冒险挑战！';
+        }
+      }
+
+      const statsEl = document.getElementById('roundModalStats');
+      if (statsEl) {
+        statsEl.textContent =
+          '本关一次答对 ' + activeRound.firstTryCorrectInRound + ' / ' + activeRound.totalQuestions +
+          ' 题，赢得 +' + activeRound.starsEarnedInRound + ' 颗星星 ⭐（总星星：' + state.stars + '）！';
+      }
+
+      const noticeEl = document.getElementById('roundModalUnlockNotice');
+      if (noticeEl) {
+        noticeEl.style.display = newlyUnlockedNote ? 'block' : 'none';
+        noticeEl.textContent = newlyUnlockedNote;
+      }
+
+      const tomorrowBox = document.getElementById('roundModalDailyTomorrowBox');
+      if (tomorrowBox) {
+        tomorrowBox.style.display = tomorrowText ? 'block' : 'none';
+        tomorrowBox.textContent = tomorrowText;
+      }
+
+      document.getElementById('roundCompleteModal').classList.add('open');
+      speakChinese(passedMap ? '太棒啦！恭喜你成功完成挑战！' : '获得一颗星，再试一次集齐两颗星就能通关啦！');
+    }
+
+    function playAnotherRound() {
+      document.getElementById('roundCompleteModal').classList.remove('open');
+      if (activeRound.levelNum) {
+        startAdventureMap(activeRound.levelNum);
+      } else if (activeRound.mode === 'warmup') {
+        startWarmupReview();
+      } else {
+        startLearningMode(activeRound.mode);
+      }
+    }
+
+    function closeRoundModalAndMap() {
+      document.getElementById('roundCompleteModal').classList.remove('open');
+      navigateScreen('challenges');
+    }
+
+    function closeRoundModalAndHome() {
+      document.getElementById('roundCompleteModal').classList.remove('open');
+      navigateScreen('home');
+    }
+
+    /* =========================================================================
+       10. 30-MAP WORLD VIEW, DAILY COUNTDOWN, REWARDS & STICKER BOOK
+       ========================================================================= */
+    function renderChallengesGrid() {
+      refreshDailyUnlockRollover();
+
+      // Update Daily Headline & Tomorrow Banner
+      const headline = document.getElementById('dailyAdventureHeadline');
+      const banner = document.getElementById('dailyComeBackBanner');
+      if (headline) {
+        headline.textContent = state.settings.dailyLimitEnabled
+          ? '🌟 今日已解锁至第 ' + state.unlockedLevel + ' / 30 关（获得 ⭐⭐ 即可通关）'
+          : '🔓 家长已关闭每日限制：全部 30 个冒险地图均可自由挑战！';
+      }
+      if (banner) {
+        banner.textContent = isWaitingForTomorrow()
+          ? '🎉 今日新冒险已通关！明天再来开启下一关新冒险吧！(Come back tomorrow for the next adventure!) 已通关地图可随时进入【练习模式】。'
+          : '每天玩 1 关（约 5–8 分钟），已通关的地图可随时进入【练习模式】赚取星星！';
+      }
+
+      // Render Completed Days Calendar Strip
+      const calStrip = document.getElementById('adventureCalendarStrip');
+      if (calStrip) {
+        calStrip.innerHTML = '<span style="font-weight:900;font-size:0.85rem;color:#4A3B75;">📅 冒险打卡日历：</span>';
+        const now = new Date();
+        for (let d = 6; d >= 0; d--) {
+          const dt = new Date(now.getTime() - d * 86400000);
+          const key = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
+          const label = (dt.getMonth() + 1) + '/' + dt.getDate();
+          const done = state.completedDays.indexOf(key) !== -1;
+          const pill = document.createElement('div');
+          pill.className = 'cal-day-dot' + (done ? ' done' : '');
+          pill.textContent = (done ? '✅ ' : '⚪ ') + (d === 0 ? '今天(' + label + ')' : label);
+          calStrip.appendChild(pill);
+        }
+      }
+
+      // Render 6 Worlds Tabs
+      const tabsBar = document.getElementById('worldTabsBar');
+      if (tabsBar) {
+        tabsBar.innerHTML = '';
+        ADVENTURE_WORLDS.forEach(function (w) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'world-tab-btn' + (state.selectedWorldNum === w.num ? ' active' : '');
+          btn.innerHTML = `<span style="font-size:1.45rem;">${w.icon}</span><span>${w.num}. ${w.name}</span>`;
+          btn.addEventListener('click', function () {
+            playButtonPop();
+            state.selectedWorldNum = w.num;
+            saveState();
+            renderChallengesGrid();
+          });
+          tabsBar.appendChild(btn);
+        });
+      }
+
+      const activeWorld = ADVENTURE_WORLDS.find(function (w) { return w.num === state.selectedWorldNum; }) || ADVENTURE_WORLDS[0];
+      const worldBanner = document.getElementById('activeWorldBanner');
+      if (worldBanner) {
+        worldBanner.innerHTML = `
+          <div>
+            <div style="font-weight:900;font-size:1.08rem;color:#3A3252;">${activeWorld.icon} 第 ${activeWorld.num} 世界：${activeWorld.name}</div>
+            <div style="font-size:0.86rem;font-weight:700;color:#5B4B8A;">${activeWorld.desc}</div>
+          </div>
+          <span style="background:#FFFFFF;padding:5px 12px;border-radius:999px;font-size:0.82rem;font-weight:800;color:#C2255C;">🎁 ${activeWorld.rewardNote}</span>
+        `;
+      }
+
+      // Render the 5 Maps of the active World
+      const grid = document.getElementById('challengeLevelsGrid');
+      if (!grid) return;
+      grid.innerHTML = '';
+
+      const worldMaps = ADVENTURE_MAPS.filter(function (m) { return m.worldId === activeWorld.id; });
+      worldMaps.forEach(function (lv) {
+        const playable = isMapPlayable(lv.level);
+        const starsEarned = state.levelStars[lv.level] || 0;
+        const isCleared = starsEarned >= 2;
+        const isTodayTarget = lv.level === state.unlockedLevel && !isCleared;
+
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'level-island-card' +
+          (lv.isBoss ? ' boss-card' : '') +
+          (isCleared ? ' completed' : '') +
+          (isTodayTarget ? ' today-target' : '') +
+          (!playable ? ' locked' : '');
+
+        let starStr = '';
+        for (let s = 1; s <= 3; s++) starStr += s <= starsEarned ? '⭐' : '☆';
+
+        const statusTag = !playable
+          ? '🔒 明日解锁'
+          : isCleared
+            ? '🔄 练习模式'
+            : lv.isBoss
+              ? '👾 守关魔王'
+              : '🌟 今日挑战';
+
+        card.innerHTML = `
+          <span class="level-tag-badge">${statusTag}</span>
+          <div class="level-icon">${playable ? lv.icon : '🔒'}</div>
+          <div class="level-name">${lv.name}</div>
+          <div class="level-rule">${lv.desc}</div>
+          <div class="level-stars-row">${starStr}</div>
+        `;
+
+        card.addEventListener('click', function () {
+          startAdventureMap(lv.level);
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    // Live Countdown Timer to Midnight
+    function updateMidnightCountdown() {
+      const el = document.getElementById('countdownClockText');
+      if (!el) return;
+      const now = new Date();
+      const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+      const diffSec = Math.max(0, Math.floor((midnight.getTime() - now.getTime()) / 1000));
+      const hh = String(Math.floor(diffSec / 3600)).padStart(2, '0');
+      const mm = String(Math.floor((diffSec % 3600) / 60)).padStart(2, '0');
+      const ss = String(diffSec % 60).padStart(2, '0');
+      el.textContent = hh + ':' + mm + ':' + ss;
+    }
+
+    function checkAndUnlockTrophies(isEndOfRound) {
+      const newlyEarned = [];
+      function grant(id) {
+        if (state.trophies.indexOf(id) === -1) {
+          state.trophies.push(id);
+          const tObj = TROPHIES.find(function (t) { return t.id === id; });
+          if (tObj) newlyEarned.push(tObj);
+        }
+      }
+      if (isEndOfRound && state.stats.totalCompleted >= 1) grant('first_win');
+      if (state.stats.additionCorrect >= 10) grant('add_master');
+      if (state.stats.subtractionCorrect >= 10) grant('sub_master');
+      if (state.stats.pictureCorrect >= 10) grant('pic_detective');
+      if (isEndOfRound && activeRound.firstTryCorrectInRound >= activeRound.totalQuestions) grant('perfect_round');
+      if (state.stats.bestStreak >= 5) grant('streak_5');
+      if (state.totalStarsEarned >= 25) grant('star_collector');
+      const clearedCount = Object.keys(state.levelStars).filter(function (k) { return state.levelStars[k] >= 2; }).length;
+      if (clearedCount >= 5) grant('island_hero');
+      return newlyEarned;
+    }
+
+    function getAvailableMysteryGifts() {
+      const totalEarnedGifts = Math.floor(state.stats.totalCorrect / 5);
+      return Math.max(0, totalEarnedGifts - state.giftsOpened);
+    }
+
+    function openMysteryGift() {
+      ensureAudioContext();
+      if (getAvailableMysteryGifts() <= 0) {
+        playGentleRetrySound();
+        return;
+      }
+      state.giftsOpened += 1;
+      const bonusStars = 4 + Math.floor(Math.random() * 4);
+      state.stars += bonusStars;
+      state.totalStarsEarned += bonusStars;
+      saveState();
+
+      playFanfareSound();
+      launchStarBurst();
+      renderRewardsScreen();
+      syncTopBarAndSettingsUI();
+
+      document.getElementById('giftRewardDesc').textContent =
+        '哇！打开神秘礼盒获得了 +' + bonusStars + ' 颗幸运星星 ⭐！快去商店解锁新装扮吧！';
+      document.getElementById('giftRewardModal').classList.add('open');
+      speakChinese('恭喜你打开神秘礼物，获得了 ' + bonusStars + ' 颗幸运星星！');
+    }
+
+    function closeGiftModal() {
+      playButtonPop();
+      document.getElementById('giftRewardModal').classList.remove('open');
+    }
+
+    function renderRewardsScreen() {
+      document.getElementById('rewardStarTotal').textContent = String(state.stars);
+      document.getElementById('rewardTrophyTotal').textContent = state.trophies.length + ' / ' + TROPHIES.length;
+      document.getElementById('rewardGiftTotal').textContent = String(state.giftsOpened);
+
+      const availGifts = getAvailableMysteryGifts();
+      const giftBtn = document.getElementById('openMysteryGiftBtn');
+      const giftText = document.getElementById('giftMilestoneText');
+      if (availGifts > 0) {
+        giftBtn.disabled = false;
+        giftBtn.textContent = '🎁 点击拆开礼物 (' + availGifts + ')';
+        giftText.textContent = '太棒啦！你有 ' + availGifts + ' 个神秘礼物盒可以拆开哦！';
+      } else {
+        const rem = 5 - (state.stats.totalCorrect % 5);
+        giftBtn.disabled = true;
+        giftBtn.textContent = '🎁 再答对 ' + rem + ' 题解锁';
+        giftText.textContent = '再答对 ' + rem + ' 道数学题，就能拆开下一个神秘礼物盒啦！';
+      }
+
+      // Render Sticker Book (30 collectible map stickers)
+      const stkGrid = document.getElementById('stickerBookGrid');
+      if (stkGrid) {
+        stkGrid.innerHTML = '';
+        ADVENTURE_MAPS.forEach(function (m) {
+          const stk = m.stickerReward;
+          const unlocked = state.stickers.indexOf(stk.id) !== -1 || (state.levelStars[m.level] || 0) >= 2;
+          const div = document.createElement('div');
+          div.className = 'sticker-card' + (unlocked ? '' : ' locked');
+          div.innerHTML = `
+            <div style="font-size:2rem;">${stk.icon}</div>
+            <div style="font-weight:900;font-size:0.88rem;">${stk.name}</div>
+            <div style="font-size:0.75rem;color:#6E6488;font-weight:700;">第${m.level}关奖励</div>
+          `;
+          stkGrid.appendChild(div);
+        });
+      }
+
+      // Render Shop Items
+      const shopGrid = document.getElementById('shopItemsGrid');
+      shopGrid.innerHTML = '';
+      CHARACTERS.forEach(function (c) {
+        shopGrid.appendChild(createShopCard('char', c, state.unlockedChars.indexOf(c.id) !== -1, state.equippedChar === c.id));
+      });
+      HATS.forEach(function (h) {
+        shopGrid.appendChild(createShopCard('hat', h, state.unlockedHats.indexOf(h.id) !== -1, state.equippedHat === h.id));
+      });
+      THEMES.forEach(function (t) {
+        shopGrid.appendChild(createShopCard('theme', t, state.unlockedThemes.indexOf(t.id) !== -1, state.equippedTheme === t.id));
+      });
+
+      // Render Trophies
+      const tGrid = document.getElementById('trophiesGrid');
+      tGrid.innerHTML = '';
+      TROPHIES.forEach(function (t) {
+        const earned = state.trophies.indexOf(t.id) !== -1;
+        const div = document.createElement('div');
+        div.className = 'trophy-card' + (earned ? '' : ' locked');
+        div.innerHTML = `
+          <div style="font-size:2rem;">${t.icon}</div>
+          <div style="font-weight:900;font-size:0.92rem;">${t.name}</div>
+          <div style="font-size:0.78rem;color:#6E6488;font-weight:700;">${t.desc}</div>
+        `;
+        tGrid.appendChild(div);
+      });
+    }
+
+    function createShopCard(category, item, unlocked, equipped) {
+      const card = document.createElement('div');
+      card.className = 'shop-item-card' + (equipped ? ' equipped' : '');
+      const btnText = equipped ? '使用中 ✓' : unlocked ? '换上它' : '⭐ ' + item.cost + ' 解锁';
+      const btnClass = equipped ? 'btn-equipped' : unlocked ? 'btn-equip' : 'btn-buy';
+      card.innerHTML = `
+        <div class="shop-item-icon">${item.icon}</div>
+        <div class="shop-item-name">${item.name}</div>
+        <button type="button" class="shop-act-btn ${btnClass}">${btnText}</button>
+      `;
+      card.querySelector('button').addEventListener('click', function () {
+        handleShopAction(category, item, unlocked);
+      });
+      return card;
+    }
+
+    function handleShopAction(category, item, unlocked) {
+      ensureAudioContext();
+      if (!unlocked) {
+        if (state.stars < item.cost) {
+          playGentleRetrySound();
+          speakChinese('星星还不够哦，再去闯关攒星星吧！');
+          return;
+        }
+        state.stars -= item.cost;
+        if (category === 'char') state.unlockedChars.push(item.id);
+        if (category === 'hat') state.unlockedHats.push(item.id);
+        if (category === 'theme') state.unlockedThemes.push(item.id);
+        playSuccessSound();
+        launchStarBurst();
+      } else {
+        playButtonPop();
+      }
+      if (category === 'char') state.equippedChar = item.id;
+      if (category === 'hat') state.equippedHat = item.id;
+      if (category === 'theme') state.equippedTheme = item.id;
+      applyWorldTheme(null);
+      saveState();
+      renderRewardsScreen();
+      syncTopBarAndSettingsUI();
+    }
+
+    function applyWorldTheme(worldClassOverride) {
+      document.body.className = '';
+      if (worldClassOverride) {
+        document.body.classList.add(worldClassOverride);
+      } else if (state.equippedTheme === 'starry') {
+        document.body.classList.add('theme-starry');
+      } else if (state.equippedTheme === 'sakura') {
+        document.body.classList.add('theme-sakura');
+      }
+    }
+
+    /* =========================================================================
+       11. KID RECORDS & EXTENDED PARENT ZONE (SKILL STATS, DAILY TOGGLE, JUMP)
+       ========================================================================= */
+    function renderKidRecordsScreen() {
+      const clearedCount = Object.keys(state.levelStars).filter(function (k) { return state.levelStars[k] >= 2; }).length;
+      document.getElementById('kidStatTotalQ').textContent = state.stats.totalCompleted + ' 题';
+      document.getElementById('kidStatCorrectQ').textContent = state.stats.totalCorrect + ' 题';
+      document.getElementById('kidStatLevels').textContent = clearedCount + ' / 30 关';
+      document.getElementById('kidStatBestStreak').textContent = state.stats.bestStreak + ' 连对';
+
+      document.getElementById('kidAddProgress').textContent = state.stats.additionCorrect + ' / ' + state.stats.additionTotal + ' 答对';
+      document.getElementById('kidSubProgress').textContent = state.stats.subtractionCorrect + ' / ' + state.stats.subtractionTotal + ' 答对';
+      document.getElementById('kidPicProgress').textContent = state.stats.pictureCorrect + ' / ' + state.stats.pictureTotal + ' 答对';
+    }
+
+    function openParentGate() {
+      playButtonPop();
+      const a = 2 + Math.floor(Math.random() * 4);
+      const b = 3 + Math.floor(Math.random() * 4);
+      const ans = a * b;
+
+      document.getElementById('parentGatePrompt').textContent =
+        '家长验证：请点击 ' + a + ' × ' + b + ' 的正确答案进入家长设置';
+
+      const opts = [ans, ans + 2, ans - 2, ans + 4];
+      for (let i = opts.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const t = opts[i]; opts[i] = opts[j]; opts[j] = t;
+      }
+
+      const container = document.getElementById('parentGateChoices');
+      container.innerHTML = '';
+      opts.forEach(function (val) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'modal-primary-btn';
+        btn.textContent = String(val);
+        btn.addEventListener('click', function () {
+          if (val === ans) {
+            closeParentGate();
+            navigateScreen('parent');
+          } else {
+            playGentleRetrySound();
+          }
+        });
+        container.appendChild(btn);
+      });
+      document.getElementById('parentGateModal').classList.add('open');
+    }
+
+    function closeParentGate() {
+      playButtonPop();
+      document.getElementById('parentGateModal').classList.remove('open');
+    }
+
+    function renderParentScreen() {
+      const total = state.stats.totalCompleted;
+      const corr = state.stats.totalCorrect;
+      const acc = total > 0 ? Math.round((corr / total) * 100) : 0;
+
+      const addAcc = state.stats.additionTotal > 0 ? Math.round((state.stats.additionCorrect / state.stats.additionTotal) * 100) : 0;
+      const subAcc = state.stats.subtractionTotal > 0 ? Math.round((state.stats.subtractionCorrect / state.stats.subtractionTotal) * 100) : 0;
+
+      document.getElementById('parentTotalQ').textContent = String(total);
+      document.getElementById('parentAccuracy').textContent = corr + ' (' + acc + '%)';
+      document.getElementById('parentTotalStars').textContent = state.stars + ' ⭐ (累计 ' + state.totalStarsEarned + ')';
+      document.getElementById('parentAddSubSplit').textContent = '加法 ' + addAcc + '% | 减法 ' + subAcc + '%';
+
+      // Render 6-Skill Accuracy Breakdown
+      const skillGrid = document.getElementById('parentSkillBreakdownGrid');
+      const weakSkills = [];
+      if (skillGrid) {
+        skillGrid.innerHTML = '';
+        Object.keys(SKILL_META).forEach(function (skKey) {
+          const meta = SKILL_META[skKey];
+          const rec = (state.stats.skillStats && state.stats.skillStats[skKey]) || { total: 0, correct: 0 };
+          const pct = rec.total > 0 ? Math.round((rec.correct / rec.total) * 100) : null;
+          if (pct !== null && pct < 80) weakSkills.push(meta.name + ' (' + pct + '%)');
+
+          const card = document.createElement('div');
+          card.className = 'stat-metric-card';
+          card.innerHTML = `
+            <span class="stat-metric-title">${meta.icon} ${meta.name}</span>
+            <span class="stat-metric-val" style="font-size:1.25rem;">${pct !== null ? pct + '% (' + rec.correct + '/' + rec.total + ')' : '暂无数据'}</span>
+          `;
+          skillGrid.appendChild(card);
+        });
+      }
+
+      // Render "Needs More Practice" Box
+      const practiceEl = document.getElementById('parentNeedsPracticeList');
+      if (practiceEl) {
+        const mistakeSamples = state.mistakes.slice(0, 5).map(function (m) {
+          return '【' + m.eqLeft + ' ' + m.eqOp + ' ' + m.eqRight + ' = ' + m.correctChoiceText + '】';
+        });
+        if (weakSkills.length === 0 && mistakeSamples.length === 0) {
+          practiceEl.textContent = '🌟 目前各项技能表现很棒，暂无高频错题记录！';
+        } else {
+          let html = '';
+          if (weakSkills.length > 0) html += '<div>• 建议加强技能：' + weakSkills.join('、') + '</div>';
+          if (mistakeSamples.length > 0) html += '<div>• 待复习错题本（共' + state.mistakes.length + '题）：' + mistakeSamples.join(' ') + '</div>';
+          practiceEl.innerHTML = html;
+        }
+      }
+
+      // Populate Jump-to-Map Select Dropdown (Maps 1-30)
+      const sel = document.getElementById('parentJumpMapSelect');
+      if (sel && sel.options.length === 0) {
+        ADVENTURE_MAPS.forEach(function (m) {
+          const opt = document.createElement('option');
+          opt.value = String(m.level);
+          opt.textContent = m.name + ' (' + m.desc + ')';
+          sel.appendChild(opt);
+        });
+      }
+      if (sel) sel.value = String(state.unlockedLevel);
+
+      syncTopBarAndSettingsUI();
+    }
+
+    function toggleDailyLimitSetting() {
+      playButtonPop();
+      state.settings.dailyLimitEnabled = !state.settings.dailyLimitEnabled;
+      saveState();
+      syncTopBarAndSettingsUI();
+    }
+
+    function parentJumpToSelectedMap() {
+      playButtonPop();
+      const sel = document.getElementById('parentJumpMapSelect');
+      const targetLevel = parseInt(sel ? sel.value : '1', 10) || 1;
+      if (targetLevel > state.unlockedLevel) {
+        state.unlockedLevel = targetLevel;
+        saveState();
+      }
+      startAdventureMap(targetLevel);
+    }
+
+    function setNumberRange(rangeMode) {
+      playButtonPop();
+      state.settings.numberRange = rangeMode;
+      saveState();
+      syncTopBarAndSettingsUI();
+    }
+
+    function openResetConfirmModal() {
+      playButtonPop();
+      document.getElementById('resetConfirmModal').classList.add('open');
+    }
+
+    function closeResetConfirmModal() {
+      playButtonPop();
+      document.getElementById('resetConfirmModal').classList.remove('open');
+    }
+
+    function confirmResetProgress() {
+      playButtonPop();
+      state = createDefaultState();
+      saveState();
+      applyWorldTheme(null);
+      closeResetConfirmModal();
+      renderParentScreen();
+      syncTopBarAndSettingsUI();
+    }
+
+    function syncTopBarAndSettingsUI() {
+      const starEl = document.getElementById('topStarCount');
+      if (starEl) starEl.textContent = String(state.stars);
+
+      const trophyEl = document.getElementById('topTrophyCount');
+      if (trophyEl) trophyEl.textContent = String(state.trophies.length);
+
+      const streakEl = document.getElementById('topStreakCount');
+      if (streakEl) streakEl.textContent = (state.dailyStreak || 1) + '天';
+
+      const giftPill = document.getElementById('topGiftPill');
+      const giftBadge = document.getElementById('topGiftBadge');
+      const availGifts = getAvailableMysteryGifts();
+      if (giftBadge) giftBadge.textContent = availGifts > 0 ? '可拆(' + availGifts + ')' : '礼物';
+      if (giftPill) giftPill.classList.toggle('gift-ready', availGifts > 0);
+
+      const bgmBtn = document.getElementById('bgmToggleBtn');
+      if (bgmBtn) bgmBtn.classList.toggle('muted', !state.settings.bgmEnabled);
+      const sfxBtn = document.getElementById('sfxToggleBtn');
+      if (sfxBtn) sfxBtn.classList.toggle('muted', !state.settings.sfxEnabled);
+
+      const is10 = state.settings.roundLength === 10;
+      const r5 = document.getElementById('roundSize5Btn');
+      const r10 = document.getElementById('roundSize10Btn');
+      const pr5 = document.getElementById('parentRound5Btn');
+      const pr10 = document.getElementById('parentRound10Btn');
+      if (r5) r5.classList.toggle('active', !is10);
+      if (r10) r10.classList.toggle('active', is10);
+      if (pr5) pr5.classList.toggle('active', !is10);
+      if (pr10) pr10.classList.toggle('active', is10);
+
+      const rng = state.settings.numberRange;
+      const b10 = document.getElementById('rangeBtn10');
+      const b20 = document.getElementById('rangeBtn20');
+      const bAuto = document.getElementById('rangeBtnAuto');
+      if (b10) b10.classList.toggle('active', rng === '10');
+      if (b20) b20.classList.toggle('active', rng === '20');
+      if (bAuto) bAuto.classList.toggle('active', rng === 'auto');
+
+      const dBtn = document.getElementById('parentDailyLimitBtn');
+      if (dBtn) {
+        dBtn.textContent = state.settings.dailyLimitEnabled ? '开启 (每日1关)' : '已关闭 (全部解锁)';
+        dBtn.classList.toggle('active', state.settings.dailyLimitEnabled);
+      }
+
+      const pBgm = document.getElementById('parentBgmBtn');
+      if (pBgm) {
+        pBgm.textContent = state.settings.bgmEnabled ? '已开启 🎵' : '已关闭 🔇';
+        pBgm.classList.toggle('active', state.settings.bgmEnabled);
+      }
+      const pSfx = document.getElementById('parentSfxBtn');
+      if (pSfx) {
+        pSfx.textContent = state.settings.sfxEnabled ? '已开启 🔊' : '已关闭 🔇';
+        pSfx.classList.toggle('active', state.settings.sfxEnabled);
+      }
+
+      const volSlider = document.getElementById('volumeSlider');
+      if (volSlider) volSlider.value = String(state.settings.volume);
+      const volText = document.getElementById('volumePercentText');
+      if (volText) volText.textContent = state.settings.volume + '%';
+    }
+
+    /* =========================================================================
+       12. INITIALIZATION ON PAGE LOAD
+       ========================================================================= */
+    window.addEventListener('DOMContentLoaded', function () {
+      loadState();
+      applyWorldTheme(null);
+      renderHomeMascot('wave');
+      updateHomeAdventureBanner();
+      syncTopBarAndSettingsUI();
+      updateMidnightCountdown();
+      setInterval(updateMidnightCountdown, 1000);
+    });
+  </script>
+</body>
+</html>
